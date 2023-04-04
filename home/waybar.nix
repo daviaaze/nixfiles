@@ -2,8 +2,7 @@
   programs = {
     waybar = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.hostPlatform.system
-      }.waybar-hyprland;
+      package = inputs.hyprland.packages.${pkgs.hostPlatform.system}.waybar-hyprland;
       systemd = {
         enable = true;
         target = "hyprland-session.target";
@@ -18,47 +17,20 @@
             "memory"
             "temperature"
             "wlr/workspaces"
-            # "wlr/taskbar"
+            "wlr/taskbar"
             "mpris"
           ];
           modules-center = [
             "clock"
           ];
           modules-right = [
-            "battery"
             "network"
-            # "wireplumber"
-            "pulseaudio"
-            "backlight"
+            "bluetooth"
+            "wireplumber"
             "tray"
-            "network#vpn"
             "custom/darkman"
-            "custom/powerprofiles"
             "custom/notification"
           ];
-
-          backlight = {
-            device = "intel_backlight";
-            format = "{icon}<sup> </sup>";
-            format-alt = "{icon} {percent}%";
-            format-icons = [ "󱩎" "󱩏" "󱩐" "󱩑" "󱩒" "󱩓" "󱩔" "󱩕" "󱩖" "󰛨" ];
-            on-scroll-down = "${pkgs.brightnessctl}/bin/brightnessctl s 5%-";
-            on-scroll-up = "${pkgs.brightnessctl}/bin/brightnessctl s +5%";
-            tooltip = true;
-          };
-          battery = {
-            bat = "BAT0";
-            format-alt = "{icon}<sup> </sup>{capacity}%";
-            format = "{icon}";
-            format-icons = {
-              charging = [ "󰢟" "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
-              discharging = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-            };
-            interval = 5;
-            states = { critical = 10; warning = 25; normal = 26; normal2 = 89; good = 90; };
-            tooltip = true;
-            tooltip-format = " {timeTo}\n {power} W  󰂎 {capacity}%";
-          };
           clock = {
             format = "{:%H:%M 󰥔<sup> </sup>󰿟󰃭 %e %b}";
             format-calendar = "<span color='#f38ba8' font='FiraCode Nerd Font'><b>{}</b></span>";
@@ -67,6 +39,14 @@
             on-click = "gnome-calendar &";
             today-format = "<span color='#a6e3a1'><b><u>{}</u></b></span>";
             tooltip-format = "<big><b>󰥔 {:%H:%M:%S 󰃭 %B %Y}</b></big>\n<tt><big>{calendar}</big></tt>";
+          };
+          bluetooth = {
+	          format = " {status}";
+	          format-disabled= ""; # an empty format will hide the module
+	          format-connected= " {num_connections} connected";
+	          tooltip-format= "{controller_alias}\t{controller_address}";
+	          tooltip-format-connected= "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+	          tooltip-format-enumerate-connected= "{device_alias}\t{device_address}";
           };
           cpu = {
             format = "󰻠<sup> </sup>{usage}%";
@@ -86,29 +66,6 @@
             format = "{}<sup> </sup>";
             interval = 5;
             on-click = "${pkgs.darkman}/bin/darkman toggle";
-            tooltip = false;
-          };
-          "custom/powerprofiles" = {
-            exec = ''
-              state=$(${pkgs.power-profiles-daemon}/bin/powerprofilesctl get)
-              if [[ $state == "power-saver" ]]; then
-                  echo ""
-              elif [[ $state == "balanced" ]]; then
-                  echo "󰗑"
-              else
-                  echo "󰓅"
-              fi'';
-            format = "{}<sup> </sup>";
-            interval = 5;
-            on-click = ''
-              state=$(${pkgs.power-profiles-daemon}/bin/powerprofilesctl get)
-              if [[ $state == "power-saver" ]]; then
-                  ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set balanced
-              elif [[ $state == "balanced" ]]; then
-                  ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance
-              else
-                  ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver
-              fi'';
             tooltip = false;
           };
           "custom/notification" = {
@@ -273,14 +230,13 @@
           min-height: 32px;
           /* border: 2px solid #abe9b3; */
         }
-        #battery,
-        #backlight,
         #clock,
         #cpu,
         #taskbar,
         #custom-weather,
         #memory,
         #pulseaudio,
+        #bluetooth,
         #wireplumber,
         #workspaces button,
         #network,

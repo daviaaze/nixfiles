@@ -10,15 +10,21 @@
 
   boot = {
     initrd = {
-      systemd.enable = true;
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     };
     kernelModules = [ "kvm-amd" "nvidia_modeset" "nvidia" "nvidia_uvm" "nvidia_drm" ];
-    extraModulePackages = [ ];
-    plymouth = {
-      enable = true;
+    loader = {
+      systemd-boot ={
+        enable = true;
+        configurationLimit = 42;
+      };
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
     };
+    extraModulePackages = [ ];
   };
+    # Use the systemd-boot EFI boot loader.
+ 
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/9eb3038f-d611-4dcd-a22a-d88320fb6a03";
@@ -30,7 +36,10 @@
       fsType = "vfat";
     };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    excludePackages = [ pkgs.xterm ];
+  };
 
     hardware = {
     opengl = {

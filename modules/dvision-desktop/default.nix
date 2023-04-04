@@ -5,11 +5,6 @@
     ./hyprland.nix
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
   networking.hostName = "dvision-desktop";
   networking.networkmanager.enable = true;
 
@@ -20,6 +15,7 @@
 
   services = {
     fwupd.enable = true;
+    blueman.enable = true;
   };
 
   programs = {
@@ -60,7 +56,6 @@ nix.settings = {
       git
       glib
       qt6.qtwayland
-      qt5ct
       libva
     ];
     pathsToLink = [ "/share/zsh" ];
@@ -72,13 +67,16 @@ nix.settings = {
   xdg.portal.wlr.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
     layout = "br";
     xkbVariant = "";
   };
+
+  system.stateVersion = "22.11"; 
+}
 
   system.stateVersion = "22.11"; 
 }

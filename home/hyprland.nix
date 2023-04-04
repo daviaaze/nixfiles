@@ -73,7 +73,7 @@
       bind=SUPER,Space,exec, wofi -n -s ~/.config/wofi/style.css
       bind=SUPERSHIFT,P,exec,wlogout -p layer-shell
       bind=SUPER,W,exec,pkill -USR1 waybar
-      bind=SUPER,C,exec, code ~/Documents/nixfiles
+      bind=SUPER,C,exec, code ~/.nixfiles
       bind=SUPER,Return,exec,kitty
       bind=SUPER,B,exec,firefox
       bind=SUPER,V,exec,pavucontrol
@@ -149,7 +149,6 @@
       exec=hyprctl setcursor Adwaita 24
       exec-once=wlsunset -l -23.1 -L -50.6 -t 4000 -T 6500 &
       exec-once=darkman run &
-      exec-once=kdeconnect-indicator &
       exec-once = sleep 10 && nextcloud --background &
     '';
   };
