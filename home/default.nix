@@ -1,12 +1,12 @@
   { inputs, pkgs, ... }: {
 
   imports = [
-    ./hyprland.nix
-    ./wofi.nix
-    ./waybar.nix
-    ./polkit-agent.nix
+    # ./hyprland.nix
+    # ./wofi.nix
+    # ./waybar.nix
+    # ./polkit-agent.nix
     ./kitty.nix
-    ./swaync.nix
+    # ./swaync.nix
   ]; 
   home = {
     username = "daviaaze";
@@ -19,6 +19,10 @@
       vscode
       firefox
       gnome.adwaita-icon-theme
+      gnomeExtensions.bluetooth-quick-connect
+      gnomeExtensions.pano
+      gnomeExtensions.vitals
+      gnomeExtensions.forge
       qalculate-gtk
       gsettings-desktop-schemas
       libnotify
@@ -27,13 +31,13 @@
       gsettings-desktop-schemas
       swaybg
       wlsunset
-      brightnessctl
       wl-clipboard
       darkman
       mpv
       imv
       shotman
       playerctl
+      github-desktop
     ];
   };
   

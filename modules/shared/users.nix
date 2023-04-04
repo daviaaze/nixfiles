@@ -6,7 +6,7 @@
       isNormalUser = true;
       shell = pkgs.zsh;
       description = "Davi Alves de Azevededo";
-      extraGroups = [ "networkmanager" "wheel" "audio" ];
+      extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
     };
   };
 }

@@ -162,7 +162,7 @@
             on-right-click = "pkill ${pkgs.pavucontrol}/bin/pavucontrol || ${pkgs.pavucontrol}/bin/pavucontrol --class='pavuctl popup' --name='pavuctl popup' -t 3";
           };
           temperature = {
-            thermal-zone = 1;
+            thermal-zone = 0;
             # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
             format = "{icon}<sup> </sup>{temperatureC}°C";
             format-icons = [ "" "" "" "" "" ];
