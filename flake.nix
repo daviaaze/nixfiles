@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "My system configuration in flakes";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "github:hyprwm/Hyprland";
@@ -21,11 +21,12 @@
         nil
       ];
     };
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.dvision-desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs.inputs = inputs;
         modules = [
-          ./configuration.nix
+          ./modules
+          ./modules/dvision-desktop
           hyprland.nixosModules.default
           home-manager.nixosModules.home-manager
           {
