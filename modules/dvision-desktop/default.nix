@@ -68,15 +68,13 @@ nix.settings = {
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.Gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
     layout = "br";
     xkbVariant = "";
   };
-
-  system.stateVersion = "22.11"; 
-}
 
   system.stateVersion = "22.11"; 
 }
