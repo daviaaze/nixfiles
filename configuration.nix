@@ -85,13 +85,38 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.daviaaze = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     description = "Davi Alves de Azevededo";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-    #  thunderbird
+      discord
+      vscode
     ];
   };
+
+  fonts.fonts = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    fira
+  ];
+
+  nix.settings = {
+    keep-outputs = true;
+    keep-derivations = true;
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+  environment = {
+    sessionVariables = {
+      MOZ_ENABLE_WAYLAND = "1";
+      XDG_CURRENT_DESKTOP = "hyprland";
+    };
+    pathsToLink = [ "/share/zsh" ];
+    shells = [ pkgs.zsh ];
+  };
+
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -99,8 +124,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    direnv
+    git
+    glib
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -23,6 +23,13 @@
       fsType = "vfat";
     };
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.enable = true;
+
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.powerManagement.enable = true;
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -34,6 +41,4 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
 }
