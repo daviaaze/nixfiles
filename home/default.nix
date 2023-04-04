@@ -7,6 +7,7 @@
     # ./polkit-agent.nix
     ./kitty.nix
     # ./swaync.nix
+    ./zsh.nix
   ]; 
   home = {
     username = "daviaaze";
@@ -24,20 +25,9 @@
       gnomeExtensions.vitals
       gnomeExtensions.forge
       qalculate-gtk
-      gsettings-desktop-schemas
-      libnotify
-      pavucontrol
-      gcr
-      gsettings-desktop-schemas
-      swaybg
-      wlsunset
-      wl-clipboard
-      darkman
-      mpv
-      imv
-      shotman
-      playerctl
       github-desktop
+      gh
+      heroku
     ];
   };
   

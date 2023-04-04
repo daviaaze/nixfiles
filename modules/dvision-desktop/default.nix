@@ -15,10 +15,15 @@
 
   services = {
     fwupd.enable = true;
-    blueman.enable = true;
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
+};
 
   programs = {
     zsh.enable = true;
