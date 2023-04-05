@@ -8,6 +8,7 @@
     ./kitty.nix
     # ./swaync.nix
     ./zsh.nix
+    ./neovim.nix
   ]; 
   home = {
     username = "daviaaze";
