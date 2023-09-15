@@ -8,58 +8,35 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot = {
-    initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-    };
-    kernelModules = [ "kvm-amd" "nvidia_modeset" "nvidia" "nvidia_uvm" "nvidia_drm" ];
-    loader = {
-      systemd-boot ={
-        enable = true;
-        configurationLimit = 42;
-      };
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
-    };
-    extraModulePackages = [ ];
-  };
-    # Use the systemd-boot EFI boot loader.
- 
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    "i915.enable_dpcd_backlight=3"
+  ]
+  
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/9eb3038f-d611-4dcd-a22a-d88320fb6a03";
+    { device = "/dev/disk/by-uuid/2a5545b3-4985-4d4a-8f09-f51c85877d5c";
       fsType = "ext4";
     };
 
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/34EE-2279";
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/6EB4-2221";
       fsType = "vfat";
     };
 
-  services.xserver = {
-    videoDrivers = [ "nvidia" ];
-    excludePackages = [ pkgs.xterm ];
-  };
+  swapDevices = [ ];
 
-    hardware = {
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        nvidia-vaapi-driver
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
-    nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
-      modesetting.enable = true;
-      powerManagement.enable = true;
-    };
-    bluetooth.enable = true;
-  };
-
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
