@@ -21,12 +21,12 @@
         nil
       ];
     };
-    nixosConfigurations.dvision-desktop = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.dvision-notebook = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs.inputs = inputs;
         modules = [
           ./modules
-          ./modules/dvision-desktop
+          ./modules/dvision-notebook
           hyprland.nixosModules.default
           home-manager.nixosModules.home-manager
           {
