@@ -7,7 +7,7 @@
   ];
 
   programs = {
-    exa.enable = true;
+    eza.enable = true;
     bat.enable = true;
     direnv = {
       enable = true;
@@ -26,7 +26,7 @@
       enable = true;
       enableAutosuggestions = true;
       enableCompletion = true;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
       enableVteIntegration = true;
       historySubstringSearch.enable = true;
       shellAliases = {
