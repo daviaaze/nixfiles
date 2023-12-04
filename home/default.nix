@@ -1,12 +1,7 @@
   { inputs, pkgs, ... }: {
 
   imports = [
-    # ./hyprland.nix
-    # ./wofi.nix
-    # ./waybar.nix
-    # ./polkit-agent.nix
     ./kitty.nix
-    # ./swaync.nix
     ./zsh.nix
     ./neovim.nix
   ]; 

@@ -1,10 +1,10 @@
 { pkgs, ... }: {
   imports = [
     ./hardware.nix
-    ./pipewire.nix
+    # ./pipewire.nix
   ];
 
-  networking.hostName = "dvision-desktop";
+  networking.hostName = "dvision-notebook";
   networking.networkmanager.enable = true;
 
   security = {
@@ -46,14 +46,6 @@ nix.settings = {
   };
 
   environment = {
-    sessionVariables = {
-      MOZ_ENABLE_WAYLAND = "1";
-      LIBVA_DRIVER_NAME="nvidia";
-      XDG_SESSION_TYPE="wayland";
-      GBM_BACKEND="nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME="nvidia";
-      WLR_NO_HARDWARE_CURSORS="1";
-    };
     systemPackages = with pkgs; [
       direnv
       git
@@ -79,5 +71,5 @@ nix.settings = {
     xkbVariant = "";
   };
 
-  system.stateVersion = "22.11"; 
+  system.stateVersion = "23.11"; 
 }
