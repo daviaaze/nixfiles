@@ -16,7 +16,6 @@
       vscode
       nil
       nixpkgs-fmt
-      postman
       firefox
       gnome.adwaita-icon-theme
       gnomeExtensions.bluetooth-quick-connect
