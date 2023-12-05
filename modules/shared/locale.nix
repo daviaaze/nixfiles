@@ -1,12 +1,12 @@
-{ config, nixpkgs, ...}:{
+{ config, nixpkgs, ... }: {
   time.timeZone = "America/Sao_Paulo";
 
   console.keyMap = "br-abnt2";
-  
+
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    
-    
+
+
     extraLocaleSettings = {
       LC_ADDRESS = "pt_BR.UTF-8";
       LC_IDENTIFICATION = "pt_BR.UTF-8";

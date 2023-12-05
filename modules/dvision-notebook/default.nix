@@ -19,27 +19,26 @@
   virtualisation.docker = {
     enable = true;
     rootless = {
-    enable = true;
-    setSocketVariable = true;
+      enable = true;
+      setSocketVariable = true;
+    };
   };
-};
 
   programs = {
     zsh.enable = true;
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     fira
   ];
 
   nixpkgs = {
     config.allowUnfree = true;
-    config.packageOverrides = pkgs: {
-    };
+    config.packageOverrides = pkgs: { };
   };
 
-nix.settings = {
+  nix.settings = {
     keep-outputs = true;
     keep-derivations = true;
     experimental-features = [ "nix-command" "flakes" ];
@@ -71,5 +70,5 @@ nix.settings = {
     xkbVariant = "";
   };
 
-  system.stateVersion = "23.11"; 
+  system.stateVersion = "23.11";
 }

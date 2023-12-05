@@ -19,27 +19,26 @@
   virtualisation.docker = {
     enable = true;
     rootless = {
-    enable = true;
-    setSocketVariable = true;
+      enable = true;
+      setSocketVariable = true;
+    };
   };
-};
 
   programs = {
     zsh.enable = true;
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     fira
   ];
 
   nixpkgs = {
     config.allowUnfree = true;
-    config.packageOverrides = pkgs: {
-    };
+    config.packageOverrides = pkgs: { };
   };
 
-nix.settings = {
+  nix.settings = {
     keep-outputs = true;
     keep-derivations = true;
     experimental-features = [ "nix-command" "flakes" ];
@@ -48,11 +47,11 @@ nix.settings = {
   environment = {
     sessionVariables = {
       MOZ_ENABLE_WAYLAND = "1";
-      LIBVA_DRIVER_NAME="nvidia";
-      XDG_SESSION_TYPE="wayland";
-      GBM_BACKEND="nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME="nvidia";
-      WLR_NO_HARDWARE_CURSORS="1";
+      LIBVA_DRIVER_NAME = "nvidia";
+      XDG_SESSION_TYPE = "wayland";
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      WLR_NO_HARDWARE_CURSORS = "1";
     };
     systemPackages = with pkgs; [
       direnv
@@ -79,5 +78,5 @@ nix.settings = {
     xkbVariant = "";
   };
 
-  system.stateVersion = "22.11"; 
+  system.stateVersion = "22.11";
 }

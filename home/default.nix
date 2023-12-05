@@ -1,10 +1,10 @@
-  { inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
 
   imports = [
     ./kitty.nix
     ./zsh.nix
     ./neovim.nix
-  ]; 
+  ];
   home = {
     username = "daviaaze";
     homeDirectory = "/home/daviaaze";
@@ -14,6 +14,9 @@
       slack
       webcord
       vscode
+      nil
+      nixpkgs-fmt
+      postman
       firefox
       gnome.adwaita-icon-theme
       gnomeExtensions.bluetooth-quick-connect
@@ -26,7 +29,7 @@
       heroku
     ];
   };
-  
+
   programs = {
     home-manager.enable = true;
   };

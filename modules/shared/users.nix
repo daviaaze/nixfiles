@@ -1,6 +1,6 @@
 { pkgs, ... }: {
-  imports = [];
-  
+  imports = [ ];
+
   users.users = {
     daviaaze = {
       isNormalUser = true;

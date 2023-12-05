@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot = {
@@ -14,7 +15,7 @@
     };
     kernelModules = [ "kvm-amd" "nvidia_modeset" "nvidia" "nvidia_uvm" "nvidia_drm" ];
     loader = {
-      systemd-boot ={
+      systemd-boot = {
         enable = true;
         configurationLimit = 42;
       };
@@ -23,16 +24,18 @@
     };
     extraModulePackages = [ ];
   };
-    # Use the systemd-boot EFI boot loader.
- 
+  # Use the systemd-boot EFI boot loader.
+
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/9eb3038f-d611-4dcd-a22a-d88320fb6a03";
+    {
+      device = "/dev/disk/by-uuid/9eb3038f-d611-4dcd-a22a-d88320fb6a03";
       fsType = "ext4";
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/34EE-2279";
+    {
+      device = "/dev/disk/by-uuid/34EE-2279";
       fsType = "vfat";
     };
 
@@ -41,7 +44,7 @@
     excludePackages = [ pkgs.xterm ];
   };
 
-    hardware = {
+  hardware = {
     opengl = {
       enable = true;
       extraPackages = with pkgs; [

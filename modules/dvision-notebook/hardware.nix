@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -15,13 +16,15 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "i915.enable_dpcd_backlight=3" ];
-  
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c8b5d0c3-081c-4646-93b8-549dcd63cdf4";
+    {
+      device = "/dev/disk/by-uuid/c8b5d0c3-081c-4646-93b8-549dcd63cdf4";
       fsType = "ext4";
     };
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2256-10A1";
+    {
+      device = "/dev/disk/by-uuid/2256-10A1";
       fsType = "vfat";
     };
 

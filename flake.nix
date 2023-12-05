@@ -15,12 +15,12 @@
     in
     {
       devShells.x86_64-linux.default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        nixpkgs-fmt
-        nil
-      ];
-    };
-    nixosConfigurations.dvision-notebook = nixpkgs.lib.nixosSystem {
+        buildInputs = with pkgs; [
+          nixpkgs-fmt
+          nil
+        ];
+      };
+      nixosConfigurations.dvision-notebook = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs.inputs = inputs;
         modules = [
@@ -38,6 +38,6 @@
             };
           }
         ];
+      };
     };
-  };
 }
