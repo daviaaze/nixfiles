@@ -17,6 +17,8 @@
       nil
       nixpkgs-fmt
       firefox
+      insomnia
+      python3
       gnome.adwaita-icon-theme
       gnomeExtensions.bluetooth-quick-connect
       gnomeExtensions.pano
