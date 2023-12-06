@@ -55,10 +55,10 @@
         plugins = [
           { name = "Aloxaf/fzf-tab"; }
           { name = "zsh-users/zsh-history-substring-search"; }
-          { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/gh"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/heroku"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/yarn"; tags = [ from:oh-my-zsh ]; }
+          { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; }
+          { name = "plugins/gh"; tags = [ "from:oh-my-zsh" ]; }
+          { name = "plugins/heroku"; tags = [ "from:oh-my-zsh" ]; }
+          { name = "plugins/yarn"; tags = [ "from:oh-my-zsh" ]; }
         ];
       };
       initExtra = ''

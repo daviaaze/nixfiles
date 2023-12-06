@@ -51,6 +51,7 @@
       glib
       qt6.qtwayland
       libva
+      bluez-alsa
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];

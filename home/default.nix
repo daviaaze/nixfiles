@@ -1,9 +1,10 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
 
   imports = [
     ./kitty.nix
     ./zsh.nix
     ./neovim.nix
+    ./services.nix
   ];
   home = {
     username = "daviaaze";
@@ -12,12 +13,16 @@
     packages = with pkgs; [
       spotify
       slack
-      webcord
+      discord
+      redisinsight
       vscode
       nil
       nixpkgs-fmt
       firefox
       insomnia
+      tidal-hifi
+      pavucontrol
+      stremio
       python3
       gnome.adwaita-icon-theme
       gnomeExtensions.bluetooth-quick-connect
