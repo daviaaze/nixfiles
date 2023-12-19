@@ -53,6 +53,12 @@
 		];
 	};
 
+  boot.extraModprobeConfig = ''
+    options snd slots=snd-hda-intel
+    options snd-hda-intel model=alc256-samsung-headphone”
+  '';
+
+
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;

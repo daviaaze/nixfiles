@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ./hardware.nix
-    # ./pipewire.nix
   ];
 
   networking.hostName = "dvision-notebook";
@@ -18,11 +17,10 @@
 
   virtualisation.docker = {
     enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
   };
+
+  networking.firewall.enable = true;
+  networking.firewall.trustedInterfaces = [ "br-120a0474162a" ];
 
   programs = {
     zsh.enable = true;
@@ -49,7 +47,6 @@
       direnv
       git
       glib
-      qt6.qtwayland
       libva
       bluez-alsa
     ];

@@ -22,12 +22,6 @@
       enable = true;
       settings = {
         add_newline = false;
-        # format = "$shell$username$hostname$nix_shell$directory$git_branch$git_commit$git_status$[❯](bold gray)$node[❯](bold blue)[❯](bold green)";
-        # nix_shell = {
-        #   symbol = "nix";
-        #   format = "[<$symbol> ]($style)";
-        #   style = "blue bold";
-        # };
       };
     };
     zsh = {
@@ -40,8 +34,9 @@
       shellAliases = {
         update = "sudo nixos-rebuild switch --upgrade --flake github:daviaaze/nixfiles";
         update-local = "sudo nixos-rebuild switch --upgrade --flake ~/.nixfiles";
+        test-local = "sudo nixos-rebuild test --flake ~/.nixfiles";
         update-flake = "sudo nix flake update ~/.nixfiles;";
-        start-lux-infra = "(cd ~/Projects/Lux/infra/infra-le-local-dev ; docker compose up -d)";
+        start-lux-infra = "(cd ~/Projects/Lux/infra/infra-le-local-dev ; docker compose up) <";
         stop-lux-infra = "(cd ~/Projects/Lux/infra/infra-le-local-dev ; docker compose down)";
         ls = "exa --color=always --icons";
         cat = "bat";

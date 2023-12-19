@@ -1,9 +1,7 @@
 { pkgs, ... }: {
 
   imports = [
-    ./kitty.nix
     ./zsh.nix
-    ./neovim.nix
     ./services.nix
   ];
   home = {
@@ -21,7 +19,6 @@
       firefox
       insomnia
       tidal-hifi
-      pavucontrol
       stremio
       python3
       gnome.adwaita-icon-theme
@@ -30,9 +27,6 @@
       gnomeExtensions.vitals
       gnomeExtensions.forge
       qalculate-gtk
-      github-desktop
-      gh
-      heroku
     ];
   };
 

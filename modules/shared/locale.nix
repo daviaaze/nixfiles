@@ -1,4 +1,4 @@
-{ config, nixpkgs, ... }: {
+{ ... }: {
   time.timeZone = "America/Sao_Paulo";
 
   console.keyMap = "br-abnt2";
