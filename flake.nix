@@ -10,17 +10,7 @@
     };
   };
   outputs = { self, nixpkgs, home-manager, lanzaboote, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-    in
     {
-      devShells.x86_64-linux.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          nixpkgs-fmt
-          nil
-        ];
-      };
       nixosConfigurations.dvision-notebook = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs.inputs = inputs;
