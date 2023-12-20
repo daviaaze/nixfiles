@@ -12,12 +12,10 @@
       spotify
       slack
       discord
-      redisinsight
       vscode
       nil
       nixpkgs-fmt
       firefox
-      insomnia
       tidal-hifi
       stremio
       python3
