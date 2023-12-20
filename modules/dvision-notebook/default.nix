@@ -6,10 +6,12 @@
   networking.hostName = "dvision-notebook";
   networking.networkmanager.enable = true;
 
-  security = {
-    polkit.enable = true;
-    pam.services.gtklock = { };
-  };
+  # security = {
+  #   polkit.enable = true;
+  #   acme.acceptTerms = true;
+  #   acme.defaults.email = "daviaaze@gmail.com";
+  #   pam.services.gtklock = { };
+  # };
 
   services = {
     fwupd.enable = true;
@@ -20,7 +22,7 @@
   };
 
   networking.firewall.enable = true;
-  networking.firewall.trustedInterfaces = [ "br-120a0474162a" ];
+  networking.firewall.trustedInterfaces = [ "br-87b655316a81" ];
 
   programs = {
     zsh.enable = true;

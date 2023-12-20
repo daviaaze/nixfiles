@@ -17,6 +17,7 @@
       pkiBundle = "/etc/secureboot";
     };
   };
+
   boot.bootspec.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
@@ -36,7 +37,10 @@
       fsType = "vfat";
     };
 
-  swapDevices = [ ];
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 16*1024;
+  }];
 
   security.rtkit.enable = true;
 
