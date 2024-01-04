@@ -6,13 +6,6 @@
   networking.hostName = "dvision-notebook";
   networking.networkmanager.enable = true;
 
-  # security = {
-  #   polkit.enable = true;
-  #   acme.acceptTerms = true;
-  #   acme.defaults.email = "daviaaze@gmail.com";
-  #   pam.services.gtklock = { };
-  # };
-
   services = {
     fwupd.enable = true;
   };
