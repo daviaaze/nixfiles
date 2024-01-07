@@ -3,6 +3,7 @@
   imports = [
     ./zsh.nix
     ./services.nix
+    ./neovim.nix
   ];
   home = {
     username = "daviaaze";
