@@ -36,8 +36,6 @@
         update-local = "sudo nixos-rebuild switch --upgrade --flake ~/.nixfiles";
         test-local = "sudo nixos-rebuild test --flake ~/.nixfiles";
         update-flake = "sudo nix flake update ~/.nixfiles;";
-        start-lux-infra = "(cd ~/Projects/Lux/infra/infra-le-local-dev ; docker compose up $(if [$# > 0]; then $@ else -d; fi))";
-        stop-lux-infra = "(cd ~/Projects/Lux/infra/infra-le-local-dev ; docker compose down)";
         ls = "exa --color=always --icons";
         cat = "bat";
       };

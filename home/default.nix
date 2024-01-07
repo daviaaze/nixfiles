@@ -17,6 +17,7 @@
       nixpkgs-fmt
       firefox
       tidal-hifi
+      github-desktop
       stremio
       python3
       gnome.adwaita-icon-theme
