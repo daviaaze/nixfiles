@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{ pkgs, inputs, ... }: {
   imports = [
     ./zsh.nix
     ./services.nix
@@ -8,17 +7,17 @@
   home = {
     username = "daviaaze";
     homeDirectory = "/home/daviaaze";
-    stateVersion = "22.11";
+    stateVersion = "23.11";
     packages = with pkgs; [
       spotify
+      alacritty
       slack
-      discord
-      vscode
+      webcord
       nil
       nixpkgs-fmt
       firefox
       tidal-hifi
-      github-desktop
+      vscode
       stremio
       python3
       gnome.adwaita-icon-theme
@@ -30,6 +29,9 @@
       gnomeExtensions.steal-my-focus-window
       qalculate-gtk
       jetbrains.datagrip
+      insomnia
+      gimp
+      inputs.luxuryescapes-cli.packages.${system}.default
     ];
   };
 

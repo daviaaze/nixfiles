@@ -9,22 +9,32 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-
   boot = {
-    loader.systemd-boot.enable = lib.mkForce false;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = lib.mkForce false;
+      grub = {
+        enable = true;
+        useOSProber = true;
+        configurationLimit = 5;
+        device = "nodev";
+      };
+    };
     lanzaboote = {
       enable = true;
       pkiBundle = "/etc/secureboot";
     };
+    bootspec.enable = true;
+    initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+    kernelParams = [ "i915.enable_dpcd_backlight=3" ];
+    extraModprobeConfig = ''
+      options snd slots=snd-hda-intel
+      options snd-hda-intel model=alc256-samsung-headphone”
+    '';
   };
-
-  boot.bootspec.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "i915.enable_dpcd_backlight=3" ];
 
   fileSystems."/" =
     {
@@ -39,7 +49,7 @@
 
   swapDevices = [{
     device = "/var/lib/swapfile";
-    size = 16*1024;
+    size = 16 * 1024;
   }];
 
   security.rtkit.enable = true;
@@ -57,12 +67,6 @@
     ];
   };
 
-  boot.extraModprobeConfig = ''
-    options snd slots=snd-hda-intel
-    options snd-hda-intel model=alc256-samsung-headphone”
-  '';
-
-
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;
@@ -72,6 +76,8 @@
     powerOnBoot = true;
   };
   hardware.enableAllFirmware = true;
+
+  time.hardwareClockInLocalTime = true;
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

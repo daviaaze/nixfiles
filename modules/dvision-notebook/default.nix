@@ -3,9 +3,6 @@
     ./hardware.nix
   ];
 
-  networking.hostName = "dvision-notebook";
-  networking.networkmanager.enable = true;
-
   services = {
     fwupd.enable = true;
   };
@@ -14,54 +11,70 @@
     enable = true;
   };
 
-  networking.firewall.enable = true;
-  networking.firewall.trustedInterfaces = [ "br-87b655316a81" ];
-
-  programs = {
-    zsh.enable = true;
+  networking = {
+    hostName = "dvision-notebook";
+    networkmanager.enable = true;
+    firewall = {
+      enable = true;
+      checkReversePath = "loose";
+      trustedInterfaces = [ "br-6a5cd8abb3e0" ];
+    };
   };
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    fira
-  ];
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    config.packageOverrides = pkgs: { };
-  };
+    programs = {
+      zsh.enable = true;
+      steam = {
+        enable = true;
+        remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+        dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      };
+    };
 
-  nix.settings = {
-    keep-outputs = true;
-    keep-derivations = true;
-    experimental-features = [ "nix-command" "flakes" ];
-  };
-
-  environment = {
-    systemPackages = with pkgs; [
-      direnv
-      git
-      glib
-      libva
-      bluez-alsa
+    fonts.packages = with pkgs; [
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      fira
     ];
-    pathsToLink = [ "/share/zsh" ];
-    shells = [ pkgs.zsh ];
-  };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  xdg.portal.wlr.enable = true;
+    nixpkgs = {
+      config.allowUnfree = true;
+      config.packageOverrides = pkgs: { };
+    };
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+    nix.settings = {
+      keep-outputs = true;
+      keep-derivations = true;
+      experimental-features = [ "nix-command" "flakes" ];
+    };
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "br";
-    xkbVariant = "";
-  };
+    environment = {
+      systemPackages = with pkgs; [
+        direnv
+        git
+        glib
+        libva
+        bluez-alsa
+        libva
+        steam-run-native
+        steam
+      ];
+      pathsToLink = [ "/share/zsh" ];
+      shells = [ pkgs.zsh ];
+    };
 
-  system.stateVersion = "23.11";
-}
+    # Enable the X11 windowing system.
+    services.xserver.enable = true;
+    xdg.portal.wlr.enable = true;
+
+    # Enable the GNOME Desktop Environment.
+    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
+
+    # Configure keymap in X11
+    services.xserver = {
+      xkb.layout = "br";
+      xkb.variant = "";
+    };
+
+    system.stateVersion = "23.11";
+  }

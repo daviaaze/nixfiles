@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    luxuryescapes-cli = {
+      url = "path:/home/daviaaze/Projects/Lux/cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { self, nixpkgs, home-manager, lanzaboote, ... }@inputs:
     {
