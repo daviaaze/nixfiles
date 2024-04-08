@@ -13,12 +13,7 @@
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = lib.mkForce false;
-      grub = {
-        enable = true;
-        useOSProber = true;
-        configurationLimit = 5;
-        device = "nodev";
-      };
+      systemd-boot.configurationLimit = 5;
     };
     lanzaboote = {
       enable = true;

@@ -20,11 +20,11 @@ stdenv.mkDerivation rec {
     url = "https://filestore.fortinet.com/forticlient/forticlient_vpn_${version}_amd64.deb";
     sha256 = "sha256-nsbwfaEBQkF/FUu+g6JHuEIuBd/VBXZlJ7A5oQiYWL8=";
   };
-  
+
 
   nativeBuildInputs = [ dpkg glibc libappindicator autoPatchelfHook makeWrapper ];
 
-  buildInputs = [];
+  buildInputs = [ ];
 
   unpackPhase = ''
     runHook preUnpack
@@ -67,16 +67,16 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    tests = { inherit (nixosTests) deconz; };
+    tests = { inherit (nixosTests) forticlientvpn; };
   };
 
   meta = with lib; {
-    description = "Manage Zigbee network with ConBee, ConBee II or RaspBee hardware";
-    homepage = "https://www.dresden-elektronik.com/wireless/software/deconz.html";
+    description = "";
+    homepage = "";
     license = licenses.unfree;
-    platforms = with platforms; [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" ];
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    maintainers = with maintainers; [ bjornfor ];
-    mainProgram = "deCONZ";
+    maintainers = with maintainers; [  ];
+    mainProgram = "FortiClient VPN";
   };
 }

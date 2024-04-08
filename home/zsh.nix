@@ -3,7 +3,12 @@
     btop
     micro
     git
+    python3
+    alacritty
     neofetch
+    nil
+    nixpkgs-fmt
+    vscode
   ];
 
   programs = {
