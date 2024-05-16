@@ -12,11 +12,10 @@
     stateVersion = "23.11";
     packages = with pkgs; [
       spotify
-      discord
       firefox
       stremio
-      insomnia
-      gimp
+      starsector
+      git-lfs
     ];
   };
 

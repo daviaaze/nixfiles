@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./hardware.nix
+    ./pipewire.nix
   ];
 
   services = {
@@ -12,15 +13,18 @@
   };
 
   networking = {
-    hostName = "dvision-notebook";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi = {
+        powersave = false;
+      };
+    };
     firewall = {
       enable = true;
       checkReversePath = "loose";
-      trustedInterfaces = [ "br-6a5cd8abb3e0" ];
+      trustedInterfaces = [ "br-48f124708ae5" ];
     };
   };
-
 
   programs = {
     zsh.enable = true;
@@ -38,7 +42,6 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    config.packageOverrides = pkgs: { };
   };
 
   nix.settings = {
@@ -53,10 +56,9 @@
       git
       glib
       libva
-      bluez-alsa
-      libva
       steam-run-native
       steam
+      vesktop
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];

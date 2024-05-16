@@ -47,29 +47,26 @@
     size = 16 * 1024;
   }];
 
-  security.rtkit.enable = true;
+  networking.hostName = "dvision-notebook";
 
+  nixpkgs.config.packageOverrides = pkgs: {
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+  };
   hardware.opengl = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
     extraPackages = with pkgs; [
-      intel-media-driver
-      vaapiIntel
-      vaapiVdpau
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       libvdpau-va-gl
-      mesa.drivers
     ];
   };
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; }; # Force intel-media-driver
 
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
   };
+
   hardware.enableAllFirmware = true;
 
   time.hardwareClockInLocalTime = true;
