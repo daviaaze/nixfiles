@@ -4,7 +4,7 @@
     slack
     teams-for-linux
     jetbrains.datagrip
-    jetbrains-toolbox
+    brave
     openfortivpn
   ];
 }
