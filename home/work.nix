@@ -6,5 +6,6 @@
     jetbrains.datagrip
     brave
     openfortivpn
+    postman
   ];
 }
