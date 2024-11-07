@@ -8,6 +8,7 @@
     jetbrains.datagrip
     openfortivpn
     postman
+    (pkgs.callPackage ../packages/openfortivpn-webviewer.nix { })
     shotcut
     ffmpeg
   ];

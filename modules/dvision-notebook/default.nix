@@ -42,6 +42,14 @@
     options = "--delete-older-than 7d";
   };
 
+  security.sudo = {
+    enable = true;
+    extraRules = [{
+      commands = [{ command = "${pkgs.openfortivpn}/bin/openfortivpn -c ~/.openfortivpn/config"; options = [ "NOPASSWD" ]; }];
+      groups = [ "Wheel" ];
+    }];
+  };
+
   networking = {
     networkmanager = {
       enable = true;

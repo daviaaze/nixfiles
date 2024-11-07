@@ -55,6 +55,7 @@
         update-flake = "sudo nix flake update ~/.nixfiles;";
         ls = "exa --color=always --icons";
         cat = "bat";
+        setup-vpn = "openfortivpn-webview vpn.luxuryescapes.com:10443 | grep -o 'SVPNCOOKIE=.*' | cut -d'=' -f2- | sudo openfortivpn -c ~/.openfortivpn/config --cookie-on-stdin";
       };
       history = {
         size = 10000;
