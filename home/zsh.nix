@@ -3,13 +3,22 @@
     btop
     micro
     git
+    git-lfs
     python3
-    alacritty
+    kitty
+    screen
     neofetch
     nil
     nixpkgs-fmt
-    vscode
+    vscodium
+    code-cursor
   ];
+
+  home.sessionVariables = {
+    EDITOR = "codium";
+    BROWSER = "zen";
+    TERMINAL = "kitty";
+  };
 
   programs = {
     eza.enable = true;
@@ -22,6 +31,9 @@
     fzf = {
       enable = true;
       enableZshIntegration = true;
+    };
+    tmux = {
+      enable = true;
     };
     starship = {
       enable = true;

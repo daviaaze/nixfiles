@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   imports = [
     ./hardware.nix
     ./pipewire.nix
@@ -6,19 +6,41 @@
 
   services = {
     fwupd.enable = true;
+    udisks2.enable = true;
+    tailscale.enable = true;
+    udev.extraRules = ''
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="2df0", ATTRS{idProduct}=="0003", TAG+="uaccess"
+    '';
   };
 
-  virtualisation.docker = {
-    enable = true;
+  virtualisation = {
+    docker = {
+      enable = true;
+    };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
   };
+
+  programs.dconf.enable = true;
+
+  users.users.daviaaze.extraGroups = [ "libvirtd" ];
+
+  services.spice-vdagentd.enable = true;
 
   nix.optimise.automatic = true;
 
   nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 7d";
-};
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   networking = {
     networkmanager = {
@@ -30,7 +52,7 @@
     firewall = {
       enable = true;
       checkReversePath = "loose";
-      trustedInterfaces = [ "br-48f124708ae5" ];
+      trustedInterfaces = [ "br-824ccdbb8b3d" ];
     };
   };
 
@@ -39,7 +61,8 @@
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      extraCompatPackages = [ pkgs.proton-ge-bin ];
+      gamescopeSession.enable = true;
     };
   };
 
@@ -64,9 +87,17 @@
       git
       glib
       libva
-      steam-run-native
-      steam
       vesktop
+      usbutils
+      exfat
+      openssl
+      virt-manager
+      virt-viewer
+      spice
+      spice-gtk
+      spice-protocol
+      win-virtio
+      win-spice
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];
@@ -76,9 +107,26 @@
   services.xserver.enable = true;
   xdg.portal.wlr.enable = true;
 
+  services.fprintd.enable = true;
+
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+  };
+
+  environment.gnome.excludePackages = (with pkgs; [
+    # for packages that are pkgs.*
+    gnome-tour
+    gnome-connections
+    # for packages that are pkgs.gnome.*
+    epiphany # web browser
+    geary # email reader
+    evince # document viewer
+    gnome-terminal
+    gnome-console
+  ]);
 
   # Configure keymap in X11
   services.xserver = {

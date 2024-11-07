@@ -1,10 +1,13 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
+    inputs.nur.hmModules.nur
     ./zsh.nix
     ./services.nix
-    ./neovim.nix
     ./gnome.nix
     ./work.nix
+    ./gaming.nix
+    ./wayland.nix
+    ./activitywatch.nix
   ];
   home = {
     username = "daviaaze";
@@ -12,10 +15,9 @@
     stateVersion = "23.11";
     packages = with pkgs; [
       spotify
-      firefox
       stremio
-      starsector
-      git-lfs
+      trayscale
+      inputs.zen-browser.packages."${system}".default
     ];
   };
 

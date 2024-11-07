@@ -22,9 +22,10 @@
     bootspec.enable = true;
     initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
     initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
-    kernelParams = [ "i915.enable_dpcd_backlight=3" ];
+    kernelModules = [ "kvm-intel" "samsung-galaxybook" ];
+    extraModulePackages = [ (config.boot.kernelPackages.callPackage ../../packages/samsung-kernel.nix {
+    }) ];
+    kernelParams = [ "i915.enable_dpcd_backlight=3" "i915.force_probe=46a8" ];
     extraModprobeConfig = ''
       options snd slots=snd-hda-intel
       options snd-hda-intel model=alc256-samsung-headphone”
@@ -32,35 +33,43 @@
   };
 
   fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/c8b5d0c3-081c-4646-93b8-549dcd63cdf4";
+    { device = "/dev/disk/by-uuid/d64386ae-2d82-4882-b144-41fcc54bda4b";
       fsType = "ext4";
     };
+
   fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/2256-10A1";
+    { device = "/dev/disk/by-uuid/EDF0-6924";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 16 * 1024;
-  }];
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/8d906469-9587-47bb-be8e-9a921e32515d";
+      fsType = "ext4";
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/2196153d-184d-41fe-a541-23767454b1cf";
+      fsType = "ext4";
+    };
+
+  swapDevices = [
+    {
+      device = "/dev/nvme0n1p5";
+    }
+  ];
 
   networking.hostName = "dvision-notebook";
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
-  };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      intel-media-driver
+      vaapiVdpau
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; }; # Force intel-media-driver
 
   hardware.bluetooth = {
     enable = true;
