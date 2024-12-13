@@ -30,24 +30,12 @@
 
   programs.dconf.enable = true;
 
-  users.users.daviaaze.extraGroups = [ "libvirtd" ];
-
   services.spice-vdagentd.enable = true;
 
-  nix.optimise.automatic = true;
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-
-  security.sudo = {
+  programs.appimage = {
     enable = true;
-    extraRules = [{
-      commands = [{ command = "${pkgs.openfortivpn}/bin/openfortivpn -c ~/.openfortivpn/config"; options = [ "NOPASSWD" ]; }];
-      groups = [ "Wheel" ];
-    }];
+    binfmt = true;
   };
 
   networking = {
@@ -75,18 +63,13 @@
   };
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    fira
+    nerd-fonts.fira-code
   ];
 
   nixpkgs = {
-    config.allowUnfree = true;
-  };
-
-  nix.settings = {
-    keep-outputs = true;
-    keep-derivations = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    config = {
+      allowUnfree = true;
+    };
   };
 
   environment = {
@@ -95,7 +78,6 @@
       git
       glib
       libva
-      vesktop
       usbutils
       exfat
       openssl
@@ -106,6 +88,10 @@
       spice-protocol
       win-virtio
       win-spice
+      intelmetool  # For Intel ME tools
+      chipsec     # For platform security assessment
+      fwts        # Firmware test suite
+      openh264
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];

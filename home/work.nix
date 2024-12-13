@@ -1,7 +1,6 @@
 { inputs, pkgs, ... }: {
   home.packages = with pkgs; [
     inputs.luxuryescapes-cli.packages.${system}.default
-    pulumi
     gh
     slack
     teams-for-linux
@@ -9,7 +8,6 @@
     openfortivpn
     postman
     (pkgs.callPackage ../packages/openfortivpn-webviewer.nix { })
-    shotcut
     ffmpeg
   ];
 }

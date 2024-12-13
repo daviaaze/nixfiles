@@ -19,7 +19,6 @@
       trayscale
       discord-canary
       inputs.zen-browser.packages.${pkgs.system}.default
-      code-cursor
     ];
   };
 

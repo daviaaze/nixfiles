@@ -2,6 +2,7 @@
   imports = [
     ./locale.nix
     ./users.nix
+    ./nix.nix
   ];
 
   # Configure console keymap
