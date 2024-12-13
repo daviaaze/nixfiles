@@ -28,7 +28,7 @@
     kernelParams = [ "i915.enable_dpcd_backlight=3" "i915.force_probe=46a8" ];
     extraModprobeConfig = ''
       options snd slots=snd-hda-intel
-      options snd-hda-intel model=alc256-samsung-headphone”
+      options snd-hda-intel model=alc256-samsung-headphone
     '';
   };
 
@@ -40,7 +40,7 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/EDF0-6924";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+      options = [ "fmask=0022" "dmask=0022" "umask=0077" ];
     };
 
   fileSystems."/home" =
@@ -56,6 +56,7 @@
   swapDevices = [
     {
       device = "/dev/nvme0n1p5";
+      randomEncryption = true;
     }
   ];
 
