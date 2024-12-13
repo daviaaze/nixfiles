@@ -12,10 +12,9 @@
     gnomeExtensions.focused-window-d-bus
     gnomeExtensions.steal-my-focus-window
     gnomeExtensions.gsconnect
-    nur.repos.zzzsy.gnome-shell-extension-pano
+    (callPackage ../packages/pano.nix {})
     smile
     pwvucontrol
-    mission-center
   ];
 
   dconf.settings = {
