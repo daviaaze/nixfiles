@@ -88,10 +88,17 @@
       spice-protocol
       win-virtio
       win-spice
-      intelmetool  # For Intel ME tools
-      chipsec     # For platform security assessment
-      fwts        # Firmware test suite
+      intelmetool # For Intel ME tools
+      chipsec # For platform security assessment
+      fwts # Firmware test suite
       openh264
+      ffmpeg
+      gst_all_1.gst-plugins-base
+      gst_all_1.gst-plugins-good
+      gst_all_1.gst-plugins-bad
+      gst_all_1.gst-plugins-ugly
+      gst_all_1.gst-libav
+      gst_all_1.gst-vaapi
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];
