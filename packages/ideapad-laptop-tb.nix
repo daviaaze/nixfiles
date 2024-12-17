@@ -2,7 +2,6 @@
 , stdenv
 , fetchFromGitHub
 , kernel
-,
 }:
 
 stdenv.mkDerivation {
