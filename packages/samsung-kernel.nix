@@ -11,22 +11,22 @@ stdenv.mkDerivation rec {
   };
 
   hardeningDisable = [ "pic" ];
-  nativeBuildInputs = kernel.moduleBuildDependencies;                  # 2
+  nativeBuildInputs = kernel.moduleBuildDependencies; # 2
 
- buildPhase = ''
+  buildPhase = ''
     make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build \
       M=$(pwd) \
       modules
   '';
 
-    installPhase = ''
+  installPhase = ''
     mkdir -p $out/lib/modules/${kernel.modDirVersion}/extra
     find . -name '*.ko' -exec cp {} $out/lib/modules/${kernel.modDirVersion}/extra \;
   '';
 
   makeFlags = kernel.makeFlags ++ [
-    "KERNELRELEASE=${kernel.modDirVersion}"                                 # 3
-    "KERNEL_SRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"    # 4
+    "KERNELRELEASE=${kernel.modDirVersion}" # 3
+    "KERNEL_SRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build" # 4
   ];
 
   meta = {

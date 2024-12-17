@@ -12,7 +12,7 @@
     homeDirectory = "/home/daviaaze";
     stateVersion = "23.11";
     enableNixpkgsReleaseCheck = true;
-    
+
     packages = with pkgs; [
       spotify
       stremio

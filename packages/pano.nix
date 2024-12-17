@@ -1,11 +1,11 @@
-{
-  stdenv,
-  gsound,
-  libgda6,
-  lib,
-  fetchzip,
-  substituteAll,
-  buildPackages,
+{ stdenv
+, gsound
+, libgda6
+, lib
+, fetchzip
+, substituteAll
+, buildPackages
+,
 }:
 
 stdenv.mkDerivation rec {

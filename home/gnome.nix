@@ -12,7 +12,7 @@
     gnomeExtensions.focused-window-d-bus
     gnomeExtensions.steal-my-focus-window
     gnomeExtensions.gsconnect
-    (callPackage ../packages/pano.nix {})
+    (callPackage ../packages/pano.nix { })
     smile
     pwvucontrol
   ];
