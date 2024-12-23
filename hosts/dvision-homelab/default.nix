@@ -60,10 +60,14 @@
           bind_port = 2022;
         };
         timezone = "America/Sao_Paulo";
-        user.rootless = {
-          enabled = true;
-          container_uid = 985;
-          container_gid = 100;
+        user = {
+          uid = 985;
+          gid = 985;
+          rootless = {
+            enabled = true;
+            container_uid = 985;
+            container_gid = 985;
+          };
         };
         crash_detection = {
           enabled = true;
