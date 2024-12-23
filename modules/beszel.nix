@@ -41,11 +41,11 @@ in
 
     systemd.services.beszel-agent = mkIf cfg.hub.enable {
       wantedBy = [ "multi-user.target" ];
+      environment = {
+        PORT = toString cfg.port;
+        KEY = cfg.key;
+      };
       serviceConfig = {
-        Environment = [
-          "PORT=${toString cfg.port}"
-          "KEY=\"${cfg.key}\""
-        ];
         User = "nginx";
         Group = "nginx";
         Restart = "always";
