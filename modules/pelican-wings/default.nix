@@ -20,14 +20,14 @@ let
       };
       cert = mkOption {
         type = types.str;
-        default = "";
-        example = "/etc/letsencrypt/live/${cfg.api.domain}/fullchain.pem";
+        default = "/etc/letsencrypt/live/${cfg.api.ssl.domain}/fullchain.pem";
+        example = "/etc/letsencrypt/live/${cfg.api.ssl.domain}/fullchain.pem";
         description = "Path to SSL certificate file";
       };
       key = mkOption {
         type = types.str;
-        default = "";
-        example = "/etc/letsencrypt/live/${cfg.api.domain}/privkey.pem";
+        default = "/etc/letsencrypt/live/${cfg.api.ssl.domain}/privkey.pem";
+        example = "/etc/letsencrypt/live/${cfg.api.ssl.domain}/privkey.pem";
         description = "Path to SSL private key file";
       };
     };
