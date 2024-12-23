@@ -64,9 +64,9 @@
           uid = 985;
           gid = 985;
           rootless = {
-            enabled = true;
-            container_uid = 985;
-            container_gid = 985;
+            enabled = false;
+            container_uid = 0;
+            container_gid = 0;
           };
         };
         crash_detection = {

@@ -547,15 +547,7 @@ in
         ];
         ExecStart = "${pelican-wings}/bin/pelican-wings --config ${cfg.system.root_directory}/config.yml";
         Restart = "always";
-        StartLimitInterval = 180;
-        StartLimitBurst = 30;
         RestartSec = "5s";
-
-        # Hardening measures
-        ProtectSystem = "full";
-        PrivateTmp = true; # Need access to /tmp
-        RemoveIPC = true;
-        NoNewPrivileges = true;
       };
     };
 
