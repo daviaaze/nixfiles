@@ -8,7 +8,14 @@
     owner = "cloudflared";
   };
 
-  sops.secrets.cloudflare_api_token = {
+  sops.secrets.cloudflare_api_token = { };
+
+  sops.secrets.node_daviaaze_cert = {
+    owner = "pelican";
+  };
+
+  sops.secrets.node_daviaaze_cert_key = {
+    owner = "pelican";
   };
 
   # Bootloader.
@@ -17,7 +24,60 @@
   networking.hostName = "dvision-homelab";
 
   modules = {
-    pelican-wings.enable = true;
+    pelican-wings = {
+      enable = true;
+      debug = false;
+      uuid = "1d8613be-bb19-4b91-8d99-6e49c447e48a";
+      tokenId = "8Q0mz63fiTZKjLW3";
+      token = "dlVjopbgFqRWt3kfFa9nJnhilsmwT9JxANFSBnO5FJX1Nalu0uGhY6ZBWjbfjX1f";
+      api = {
+        host = "0.0.0.0";
+        port = 8443;
+        ssl = {
+          enabled = true;
+          cert = config.sops.secrets.node_daviaaze_cert.path;
+          key = config.sops.secrets.node_daviaaze_cert_key.path;
+        };
+        trusted_proxies = [
+          "173.245.48.0/20"
+          "103.21.244.0/22"
+          "103.22.200.0/22"
+          "103.31.4.0/22"
+          "141.101.64.0/18"
+          "108.162.192.0/18"
+          "190.93.240.0/20"
+          "188.114.96.0/20"
+          "197.234.240.0/22"
+          "198.41.128.0/17"
+          "162.158.0.0/15"
+          "104.16.0.0/13"
+          "104.24.0.0/14"
+          "172.64.0.0/13"
+          "131.0.72.0/22"
+        ];
+      };
+      system = {
+        sftp = {
+          bind_port = 2022;
+        };
+        timezone = "America/Sao_Paulo";
+        user.rootless = {
+          enabled = true;
+          container_uid = 985;
+          container_gid = 100;
+        };
+        crash_detection = {
+          enabled = true;
+          timeout = 60;
+        };
+      };
+      docker.network = {
+        interface = "172.18.0.1";
+        dns = [ "1.1.1.1" "1.0.0.1" ];
+        IPv6 = true;
+      };
+      remote = "https://panel.daviaaze.com";
+    };
     beszel = {
       enable = true;
       port = 45876;
