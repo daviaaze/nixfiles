@@ -61,10 +61,6 @@ in
       forceSSL = enableSSL;
       enableACME = enableSSL;
 
-      # These two lines are not needed when using ACME
-      # sslCertificate = "/var/lib/acme/${serverName}/fullchain.pem";
-      # sslCertificateKey = "/var/lib/acme/${serverName}/key.pem";
-
       extraConfig = ''
         index index.html index.htm index.php;
         charset utf-8;

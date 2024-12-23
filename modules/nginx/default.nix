@@ -32,6 +32,8 @@ in
   config = mkIf cfg.enable {
     services.nginx = {
       enable = true;
+      # Add recommended proxy settings
+      recommendedProxySettings = true;
     };
 
     # Open ports in the firewall.

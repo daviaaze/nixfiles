@@ -28,7 +28,6 @@ in
           proxyPass = "http://localhost:${toString cfg.port}";
           proxyWebsockets = true; # Important for beszel
           extraConfig = ''
-            proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
           '';
