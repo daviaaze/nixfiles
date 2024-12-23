@@ -35,8 +35,7 @@
         port = 8443;
         ssl = {
           enabled = true;
-          cert = config.sops.secrets.node_daviaaze_cert.path;
-          key = config.sops.secrets.node_daviaaze_cert_key.path;
+          domain = "node.daviaaze.com";
         };
         trusted_proxies = [
           "173.245.48.0/20"

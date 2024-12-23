@@ -12,16 +12,22 @@ let
         default = false;
         description = "Enable SSL/TLS for the API";
       };
+      domain = mkOption {
+        type = types.str;
+        default = "";
+        example = "example.com";
+        description = "Domain name";
+      };
       cert = mkOption {
         type = types.str;
         default = "";
-        example = "/etc/letsencrypt/live/example.com/fullchain.pem";
+        example = "/etc/letsencrypt/live/${cfg.api.domain}/fullchain.pem";
         description = "Path to SSL certificate file";
       };
       key = mkOption {
         type = types.str;
         default = "";
-        example = "/etc/letsencrypt/live/example.com/privkey.pem";
+        example = "/etc/letsencrypt/live/${cfg.api.domain}/privkey.pem";
         description = "Path to SSL private key file";
       };
     };
