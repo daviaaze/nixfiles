@@ -8,6 +8,9 @@
     owner = "cloudflared";
   };
 
+  sops.secrets.cloudflare_api_token = {
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -46,16 +49,25 @@
           credentialsFile = config.sops.secrets.cloudflared_token.path;
           warp-routing.enabled = true;
           ingress = {
-            "node.daviaaze.com" = {
-              service = "http://localhost:8443";
-            };
             "*.daviaaze.com" = {
               service = "http://localhost:80";
+            };
+            "node.daviaaze.com" = {
+              service = "http://localhost:8443";
             };
           };
           default = "http_status:404";
         };
       };
+    };
+    cloudflare-dyndns = {
+      enable = true;
+      apiTokenFile = config.sops.secrets.cloudflare_api_token.path;
+      domains = [ "node.daviaaze.com" ];
+      ipv4 = true;
+      ipv6 = true;
+      proxied = true;
+      deleteMissing = true;
     };
   };
   virtualisation = {
