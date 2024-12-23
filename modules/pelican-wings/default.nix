@@ -23,7 +23,7 @@ in
         Group = "pelican";
         WorkingDirectory = "/var/lib/pelican";
         LimitNOFILE = 4096;
-        PIDFile = "/var/run/pelican-wings/daemon.pid";
+        PIDFile = "/run/pelican-wings/daemon.pid";
         ExecStart = "${pelican-wings}/bin/pelican-wings --config /var/lib/pelican/config.yml";
         Restart = "always";
         StartLimitInterval = 180;
