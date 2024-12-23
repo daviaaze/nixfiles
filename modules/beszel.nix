@@ -44,7 +44,7 @@ in
       serviceConfig = {
         Environment = [
           "PORT=${toString cfg.port}"
-          "KEY=${cfg.key}"
+          "KEY=\"${cfg.key}\""
         ];
         User = "nginx";
         Group = "nginx";
