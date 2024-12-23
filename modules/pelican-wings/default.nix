@@ -1,7 +1,8 @@
-{ inputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 
 with lib; let
   cfg = config.modules.pelican-wings;
+  pelican-wings = pkgs.callPackage ./package.nix {};
 in
 {
   options = {
@@ -16,7 +17,7 @@ in
     virtualisation.docker.enable = true;
 
     environment.systemPackages = [
-      (pkgs.callPackage ./package.nix { })
+      pelican-wings
     ];
 
     systemd.services.pelican-wings = {
@@ -30,7 +31,7 @@ in
         WorkingDirectory = "/etc/pelican";
         LimitNOFILE = 4096;
         PIDFile = "/var/run/wings/daemon.pid";
-        ExecStart = "/run/current-system/sw/bin/wings";
+        ExecStart = "${pelican-wings}/bin/wings";
         Restart = "on-failure";
         startLimitInterval = 180;
         startLimitBurst = 30;

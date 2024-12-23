@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchurl, docker, gnutar }:
+{ stdenv, fetchurl, docker, gnutar }:
 
 stdenv.mkDerivation rec {
   pname = "pelican-wings";
