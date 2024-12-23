@@ -565,11 +565,18 @@ in
       isSystemUser = true;
       home = "/var/lib/pelican";
       createHome = true;
-      extraGroups = [ "docker" ];
+      extraGroups = [ "docker" "letsencrypt" ];
       description = "Pelican Wings daemon user";
     };
 
     users.groups.pelican = { };
+
+    # Ensure the letsencrypt directory has proper permissions
+    system.activationScripts.letsencryptPermissions = lib.stringAfter [ "var" ] ''
+      if [ -d /etc/letsencrypt/live ]; then
+        ${pkgs.acl}/bin/setfacl -R -m g:letsencrypt:rX /etc/letsencrypt/{live,archive}
+      fi
+    '';
 
     networking.firewall.allowedTCPPorts = [ cfg.api.port cfg.system.sftp.bind_port ];
   };
