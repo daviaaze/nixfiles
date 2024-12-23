@@ -7,10 +7,6 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,8 +54,5 @@
         dvision-thinkbook = mkSystem nixpkgs "x86_64-linux" "dvision-thinkbook";
         dvision-homelab = mkSystem nixpkgs "x86_64-linux" "dvision-homelab";
       };
-      packages = flake-utils.lib.eachDefaultSystem (system: {
-        pelican-wings = nixpkgs.legacyPackages.${system}.callPackage ./modules/pelican-wings/package.nix { };
-      });
     };
 }
