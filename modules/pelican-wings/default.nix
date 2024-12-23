@@ -553,11 +553,11 @@ in
 
     # Create user and group
     users.users.pelican = {
-      group = "root";
+      group = "pelican";
       isSystemUser = true;
       home = "/var/lib/pelican";
       createHome = true;
-      extraGroups = [ "docker" "letsencrypt" ];
+      extraGroups = [ "docker" "letsencrypt" "root" ];
       description = "Pelican Wings daemon user";
     };
 
