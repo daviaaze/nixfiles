@@ -12,17 +12,23 @@ in
   config = mkIf cfg.enable {
     systemd.services.pelican-wings = {
       description = "Wings Daemon";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
+      after = [ "network-online.target" "docker.service" ];
+      wants = [ "network-online.target" "docker.service" ];
+      partOf = [ "docker.service" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
         Type = "simple";
         User = "pelican-wings";
         Group = "pelican-wings";
-        ExecStart = "${pelican-wings}/bin/pelican-wings";
+        WorkingDirectory = "/var/lib/pelican-wings";
+        LimitNOFILE = 4096;
+        PIDFile = "/var/run/pelican-wings/daemon.pid";
+        ExecStart = "${pelican-wings}/bin/pelican-wings --config /var/lib/pelican/config.yml";
         Restart = "always";
-        RestartSec = "3";
+        StartLimitInterval = 180;
+        StartLimitBurst = 30;
+        RestartSec = "5s";
 
         # Hardening measures
         ProtectSystem = "full";
@@ -33,13 +39,15 @@ in
     };
 
     # Create user and group
-    users.users.pelican-wings = {
-      group = "pelican-wings";
+    users.users.pelican = {
+      group = "pelican";
       isSystemUser = true;
+      home = "/var/lib/pelican";
+      createHome = true;
       extraGroups = [ "docker" ];
       description = "Pelican Wings daemon user";
     };
 
-    users.groups.pelican-wings = {};
+    users.groups.pelican = {};
   };
 }
