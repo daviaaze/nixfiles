@@ -31,14 +31,15 @@
     cloudflared = {
       enable = true;
       tunnels = {
-        "34cc918e-ece3-44cf-8fb9-441d485a8883" = {
+        "84d5de41-70ff-4701-ab67-2c36f8667801" = {
           credentialsFile = config.sops.secrets.cloudflared_token.path;
-          default = "http_status:404";
+          warp-routing.enabled = true;
           ingress = {
             "*.daviaaze.com" = {
               service = "http://localhost:80";
             };
           };
+          default = "http_status:404";
         };
       };
     };
