@@ -18,7 +18,10 @@
     cloudflared.enable = true;
     nginx = {
       enable = true;
-      panel.enable = true;
+      panel = {
+        enable = true;
+        enableSSL = false;
+      };
     };
   };
 
