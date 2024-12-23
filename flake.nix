@@ -3,57 +3,56 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     luxuryescapes-cli.url = "path:/home/daviaaze/Projects/Lux/cli";
     zen-browser.url = "github:daviaaze/zen-browser-flake";
   };
-  outputs = { self, nixpkgs, chaotic, home-manager, lanzaboote, ... }@inputs:
+  outputs = { self, nixpkgs, chaotic, home-manager, lanzaboote, sops-nix, ... }@inputs:
+    let
+      mkSystem = packages: system: hostname:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs system;
+            pkgs = import packages {
+              inherit system; config = {
+              allowUnfree = true;
+              allowBroken = true;
+              allowInsecure = true;
+              permittedInsecurePackages = [
+                "electron-28.3.3"
+              ];
+            };
+            };
+          };
+          modules = [
+            ./modules
+            ./hosts/${hostname}
+            inputs.sops-nix.nixosModules.sops
+            {
+              sops.defaultSopsFile = ./secrets/secrets.yaml;
+              sops.defaultSopsFormat = "yaml";
+              sops.age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt";
+              sops.secrets.daviaaze_password.neededForUsers = true;
+            }
+          ];
+        };
+    in
     {
-      nixosConfigurations.dvision-thinkbook = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs.inputs = inputs;
-        modules = [
-          ./modules
-          ./modules/dvision-thinkbook
-          lanzaboote.nixosModules.lanzaboote
-          home-manager.nixosModules.home-manager
-          chaotic.nixosModules.default
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs.inputs = inputs;
-              users.daviaaze.imports = [
-                ./home
-              ];
-            };
-          }
-        ];
-      };
-      nixosConfigurations.dvision-homelab = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs.inputs = inputs;
-        modules = [
-          ./modules
-          ./modules/dvision-homelab
-          lanzaboote.nixosModules.lanzaboote
-          home-manager.nixosModules.home-manager
-          chaotic.nixosModules.default
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs.inputs = inputs;
-              users.daviaaze.imports = [
-                ./home/homelab.nix
-              ];
-            };
-          }
-        ];
+      nixosConfigurations = {
+        dvision-thinkbook = mkSystem nixpkgs "x86_64-linux" "dvision-thinkbook";
+        dvision-homelab = mkSystem nixpkgs "x86_64-linux" "dvision-homelab";
       };
     };
 }

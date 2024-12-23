@@ -5,13 +5,13 @@
     gnome-control-center
     gensio
     pkgs.adwaita-icon-theme
-    gnomeExtensions.bluetooth-quick-connect
     gnomeExtensions.vitals
     gnomeExtensions.appindicator
     gnomeExtensions.wireless-hid
     gnomeExtensions.focused-window-d-bus
     gnomeExtensions.steal-my-focus-window
     gnomeExtensions.gsconnect
+    gnomeExtensions.caffeine
     (callPackage ../packages/pano.nix { })
     smile
     pwvucontrol

@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub, buildNpmPackage, electron_28, nodejs_18 }:
+{ fetchFromGitHub, buildNpmPackage, electron_28, nodejs_18 }:
 let
   electron = electron_28;
 in

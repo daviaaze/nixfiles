@@ -1,35 +1,34 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, config, ... }: {
   imports = [
+    inputs.chaotic.nixosModules.default
     ./hardware.nix
-    ./lenovo.nix
   ];
 
-  networking.hostName = "dvision-thinkbook";
-
-  services = {
-    fwupd.enable = true;
-    udisks2.enable = true;
-    tailscale.enable = true;
-    openssh.enable = true;
+  sops.secrets.cloudflared_token = {
+    owner = "cloudflared";
   };
 
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  networking.hostName = "dvision-homelab";
+
+  modules = {
+    pelican-wings.enable = true;
+    cloudflared.enable = true;
+    nginx = {
+      enable = true;
+      panel.enable = true;
+    };
+  };
+
+  services = {
+    openssh.enable = true;
+    fwupd.enable = true;
+  };
   virtualisation = {
     docker = {
       enable = true;
-    };
-  };
-
-  networking = {
-    networkmanager = {
-      enable = true;
-      wifi = {
-        powersave = false;
-      };
-    };
-    firewall = {
-      enable = true;
-      checkReversePath = "loose";
-      trustedInterfaces = [ "br-824ccdbb8b3d" ];
     };
   };
 
@@ -50,22 +49,13 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
+      allowBroken = true;
     };
   };
 
   environment = {
-    sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 = (
-      pkgs.lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" (
-        with pkgs.gst_all_1;
-        [
-          gst-plugins-good
-          gst-plugins-bad
-          gst-plugins-ugly
-          gst-libav
-        ]
-      )
-    );
     systemPackages = with pkgs; [
+      firmware-updater
       direnv
       git
       glib
@@ -80,17 +70,6 @@
       spice-protocol
       win-virtio
       win-spice
-      intelmetool # For Intel ME tools
-      chipsec # For platform security assessment
-      fwts # Firmware test suite
-      openh264
-      ffmpeg
-      gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-good
-      gst_all_1.gst-plugins-bad
-      gst_all_1.gst-plugins-ugly
-      gst_all_1.gst-libav
-      gst_all_1.gst-vaapi
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];

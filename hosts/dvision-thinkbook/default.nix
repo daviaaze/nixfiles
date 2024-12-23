@@ -1,16 +1,30 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     ./hardware.nix
+    ./lenovo.nix
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs.inputs = inputs;
+        users.daviaaze.imports = [
+          ../../home
+        ];
+      };
+    }
   ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  networking.hostName = "dvision-homelab";
+  networking.hostName = "dvision-thinkbook";
 
   services = {
-    openssh.enable = true;
     fwupd.enable = true;
+    udisks2.enable = true;
+    cpupower-gui.enable = true;
+    pipewire.enable = true;
+    tailscale.enable = true;
+    openssh.enable = true;
+    pcscd.enable = true;
   };
 
   virtualisation = {
@@ -19,8 +33,28 @@
     };
   };
 
+  networking = {
+    networkmanager = {
+      enable = true;
+      wifi = {
+        powersave = false;
+      };
+    };
+    firewall = {
+      enable = true;
+      checkReversePath = "loose";
+      trustedInterfaces = [ "br-824ccdbb8b3d" ];
+    };
+  };
+
   programs = {
     zsh.enable = true;
+    noisetorch.enable = true;
+    gnupg.agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-curses;
+      enableSSHSupport = true;
+    };
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -36,13 +70,22 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowBroken = true;
     };
   };
 
   environment = {
+    sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 = (
+      pkgs.lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" (
+        with pkgs.gst_all_1;
+        [
+          gst-plugins-good
+          gst-plugins-bad
+          gst-plugins-ugly
+          gst-libav
+        ]
+      )
+    );
     systemPackages = with pkgs; [
-      firmware-updater
       direnv
       git
       glib
@@ -57,6 +100,20 @@
       spice-protocol
       win-virtio
       win-spice
+      intelmetool # For Intel ME tools
+      chipsec # For platform security assessment
+      fwts # Firmware test suite
+      bitwarden-desktop
+      devbox
+      mesa
+      openh264
+      ffmpeg
+      gst_all_1.gst-plugins-base
+      gst_all_1.gst-plugins-good
+      gst_all_1.gst-plugins-bad
+      gst_all_1.gst-plugins-ugly
+      gst_all_1.gst-libav
+      gst_all_1.gst-vaapi
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];

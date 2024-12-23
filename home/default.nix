@@ -18,6 +18,7 @@
       stremio
       trayscale
       discord-canary
+      vesktop
       inputs.zen-browser.packages.${pkgs.system}.default
     ];
   };
