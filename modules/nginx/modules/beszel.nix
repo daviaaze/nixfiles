@@ -22,14 +22,17 @@ in
         { port = 80; addr = "[::1]"; }
         { port = 80; addr = "0.0.0.0"; }
       ];
-
+      
+      serverName = serverName;
+      
       locations = {
         "/" = {
           proxyPass = "http://localhost:${toString cfg.port}";
-          proxyWebsockets = true; # Important for beszel
+          proxyWebsockets = true;
           extraConfig = ''
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
           '';
         };
       };

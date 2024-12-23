@@ -58,6 +58,8 @@ in
         { port = 80; addr = "0.0.0.0"; }
       ];
 
+      serverName = serverName;
+
       forceSSL = enableSSL;
       enableACME = enableSSL;
 

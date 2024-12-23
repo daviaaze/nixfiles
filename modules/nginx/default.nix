@@ -32,8 +32,19 @@ in
   config = mkIf cfg.enable {
     services.nginx = {
       enable = true;
-      # Add recommended proxy settings
       recommendedProxySettings = true;
+      
+      # Add a default virtual host that returns 404
+      virtualHosts."_" = {
+        listen = [
+          { port = 80; addr = "0.0.0.0"; }
+          { port = 80; addr = "127.0.0.1"; }
+          { port = 80; addr = "[::1]"; }
+        ];
+        locations."/" = {
+          return = "404";
+        };
+      };
     };
 
     # Open ports in the firewall.

@@ -1,52 +1,53 @@
-{ pkgs, lib, config, ... }:
-
-with lib; let
+{ config, lib, pkgs, ... }:
+with lib;
+let
   cfg = config.modules.pelican-wings;
   pelican-wings = pkgs.callPackage ./package.nix { };
+  dataDir = "/var/lib/pelican-wings";
 in
 {
-  options = {
-    modules.pelican-wings = {
-      enable = mkEnableOption "Pelican Wings";
-    };
+  options.modules.pelican-wings = {
+    enable = mkEnableOption "Enable Pelican Wings";
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 8080 8443 ];
-
-    virtualisation.docker.enable = true;
-
-    environment.systemPackages = [
-      pelican-wings
-    ];
-
-    users.groups.pelican = {};
-
-    users.users.pelican = {
-      isSystemUser = true;
-      group = "pelican";
-      extraGroups = [ "docker" ];
-    };
-
     systemd.services.pelican-wings = {
       description = "Wings Daemon";
-      after = [ "docker.service" ];
-      requires = [ "docker.service" ];
-      partOf = [ "docker.service" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        User = "pelican";
-        WorkingDirectory = "/var/lib/pelican-wings";
-        LimitNOFILE = 4096;
-        PIDFile = "/var/run/pelican-wings/daemon.pid";
+        Type = "simple";
+        User = "pelican-wings";
+        Group = "pelican-wings";
+        WorkingDirectory = dataDir;
         ExecStart = "${pelican-wings}/bin/pelican-wings";
-        Restart = "on-failure";
-        startLimitInterval = 180;
-        startLimitBurst = 30;
-        RestartSec = "5";
-      };
+        Restart = "always";
+        RestartSec = "3";
 
-      wantedBy = [ "multi-user.target" ];
+        # Hardening measures
+        ProtectSystem = "full";
+        PrivateTmp = true;
+        RemoveIPC = true;
+        NoNewPrivileges = true;
+      };
     };
+
+    # Create user and group
+    users.users.pelican-wings = {
+      group = "pelican-wings";
+      home = dataDir;
+      createHome = true;
+      isSystemUser = true;
+      description = "Pelican Wings daemon user";
+    };
+
+    users.groups.pelican-wings = {};
+
+    # Ensure data directory exists with correct permissions
+    systemd.tmpfiles.rules = [
+      "d ${dataDir} 0750 pelican-wings pelican-wings - -"
+    ];
   };
 }
