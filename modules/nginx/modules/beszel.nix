@@ -17,7 +17,11 @@ in
 
   config = mkIf cfg.enable {
     services.nginx.virtualHosts."${serverName}" = {
-      listen = [{ port = 80; addr = "0.0.0.0"; }];
+      listen = [
+        { port = 80; addr = "127.0.0.1"; }
+        { port = 80; addr = "[::1]"; }
+        { port = 80; addr = "0.0.0.0"; }
+      ];
 
       locations = {
         "/" = {

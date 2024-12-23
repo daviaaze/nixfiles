@@ -52,7 +52,11 @@ in
 
     services.nginx.virtualHosts."${serverName}" = {
       root = "${dir}";
-      listen = [{ inherit port; addr = "0.0.0.0"; ssl = enableSSL; }];
+      listen = [
+        { port = 80; addr = "127.0.0.1"; }
+        { port = 80; addr = "[::1]"; }
+        { port = 80; addr = "0.0.0.0"; }
+      ];
 
       forceSSL = enableSSL;
       enableACME = enableSSL;
