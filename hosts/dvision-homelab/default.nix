@@ -18,7 +18,7 @@
   modules = {
     pelican-wings = {
       enable = true;
-      debug = false;
+      debug = true;
       uuid = "1d8613be-bb19-4b91-8d99-6e49c447e48a";
       tokenId = "8Q0mz63fiTZKjLW3";
       token = "dlVjopbgFqRWt3kfFa9nJnhilsmwT9JxANFSBnO5FJX1Nalu0uGhY6ZBWjbfjX1f";
@@ -65,7 +65,7 @@
           enabled = true;
           timeout = 60;
         };
-        allowed_mounts = [ "/tmp/pelican" ];
+        allowed_mounts = [];
       };
       docker.network = {
         interface = "172.18.0.1";
@@ -107,9 +107,6 @@
           ingress = {
             "*.daviaaze.com" = {
               service = "http://localhost:80";
-            };
-            "node.daviaaze.com" = {
-              service = "http://localhost:8443";
             };
           };
           default = "http_status:404";
