@@ -49,5 +49,7 @@ in
     };
 
     users.groups.pelican = {};
+
+    networking.firewall.allowedTCPPorts = [ 8443 ];
   };
 }
