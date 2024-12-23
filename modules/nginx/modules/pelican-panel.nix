@@ -15,7 +15,7 @@ in
 
     port = mkOption {
       type = types.int;
-      default = 80;
+      default = 8631;
       description = ''
         The port to use for this virtual host.
       '';
@@ -52,7 +52,7 @@ in
 
     services.nginx.virtualHosts."${serverName}" = {
       root = "${dir}";
-      listen = [{ inherit port; addr = "0.0.0.0"; ssl = enableSSL; }];
+      listen = [{ inherit port; addr="0.0.0.0"; ssl=enableSSL; }];
 
       forceSSL = enableSSL;
       enableACME = enableSSL;
@@ -60,7 +60,7 @@ in
       # These two lines are not needed when using ACME
       # sslCertificate = "/var/lib/acme/${serverName}/fullchain.pem";
       # sslCertificateKey = "/var/lib/acme/${serverName}/key.pem";
-
+      
       extraConfig = ''
         index index.html index.htm index.php;
         charset utf-8;
@@ -91,7 +91,7 @@ in
           extraConfig = ''       
             try_files $uri $uri/ /index.php?$query_string;
           '';
-        };
+	      };
 
         "/favicon.ico".extraConfig = ''
           access_log off;
@@ -102,8 +102,8 @@ in
           access_log off;
           log_not_found off;
         '';
-
-        "~ \\.php$" = {
+      
+        "~ \\.php$"  = {         
           extraConfig = ''
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
             fastcgi_pass unix:${config.services.phpfpm.pools.${appUser}.socket};
