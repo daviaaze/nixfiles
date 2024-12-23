@@ -99,7 +99,7 @@ let
       };
       tmp_directory = mkOption {
         type = types.str;
-        default = "/tmp/pelican";
+        default = "${cfg.system.root_directory}/tmp";
         description = "Temporary directory";
       };
       username = mkOption {
@@ -518,9 +518,11 @@ in
   };
 
   config = mkIf cfg.enable {
-      system.activationScripts.makePelicanDir = lib.stringAfter [ "var" ] ''
+    system.activationScripts.makePelicanDir = lib.stringAfter [ "var" ] ''
       mkdir -p ${cfg.system.root_directory}
+      mkdir -p ${cfg.system.tmp_directory}
       chown pelican:pelican ${cfg.system.root_directory}
+      chown pelican:pelican ${cfg.system.tmp_directory}
       echo '${configFile}' > ${cfg.system.root_directory}/config.yml
     '';
     systemd.services.pelican-wings = {
@@ -535,9 +537,15 @@ in
         User = "pelican";
         Group = "pelican";
         WorkingDirectory = "/var/lib/pelican";
+        RuntimeDirectory = "pelican-wings";
+        RuntimeDirectoryMode = "0750";
         LimitNOFILE = 4096;
         PIDFile = "/run/pelican-wings/daemon.pid";
-        ExecStart = "${pelican-wings}/bin/pelican-wings --config /var/lib/pelican/config.yml";
+        ExecStartPre = [
+          "+${pkgs.coreutils}/bin/mkdir -p ${cfg.system.tmp_directory}"
+          "+${pkgs.coreutils}/bin/chown pelican:pelican ${cfg.system.tmp_directory}"
+        ];
+        ExecStart = "${pelican-wings}/bin/pelican-wings --config ${cfg.system.root_directory}/config.yml";
         Restart = "always";
         StartLimitInterval = 180;
         StartLimitBurst = 30;
@@ -545,7 +553,7 @@ in
 
         # Hardening measures
         ProtectSystem = "full";
-        PrivateTmp = true;
+        PrivateTmp = false; # Need access to /tmp
         RemoveIPC = true;
         NoNewPrivileges = true;
       };
