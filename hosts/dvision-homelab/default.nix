@@ -16,11 +16,16 @@
   modules = {
     pelican-wings.enable = true;
     cloudflared.enable = true;
+    beszel.enable = true;
     nginx = {
       enable = true;
+      domainName = "daviaaze.com";
       panel = {
         enable = true;
         enableSSL = false;
+      };
+      beszel = {
+        enable = true;
       };
     };
   };

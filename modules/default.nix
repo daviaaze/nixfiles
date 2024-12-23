@@ -5,5 +5,6 @@
     ./pelican-wings
     ./cloudflared
     ./nginx
+    ./beszel.nix
   ];
 }
