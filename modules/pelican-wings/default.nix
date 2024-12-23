@@ -535,7 +535,7 @@ in
       serviceConfig = {
         Type = "simple";
         User = "pelican";
-        Group = "pelican";
+        Group = "root";
         WorkingDirectory = "/var/lib/pelican";
         RuntimeDirectory = "pelican-wings";
         RuntimeDirectoryMode = "0750";
@@ -553,11 +553,11 @@ in
 
     # Create user and group
     users.users.pelican = {
-      group = "pelican";
+      group = "root";
       isSystemUser = true;
       home = "/var/lib/pelican";
       createHome = true;
-      extraGroups = [ "docker" "letsencrypt" "sudoers" ];
+      extraGroups = [ "docker" "letsencrypt" ];
       description = "Pelican Wings daemon user";
     };
 
