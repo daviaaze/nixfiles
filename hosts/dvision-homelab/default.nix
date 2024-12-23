@@ -10,14 +10,6 @@
 
   sops.secrets.cloudflare_api_token = { };
 
-  sops.secrets.node_daviaaze_cert = {
-    owner = "pelican";
-  };
-
-  sops.secrets.node_daviaaze_cert_key = {
-    owner = "pelican";
-  };
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -61,8 +53,8 @@
         };
         timezone = "America/Sao_Paulo";
         user = {
-          uid = 985;
-          gid = 985;
+          uid = 0;
+          gid = 0;
           rootless = {
             enabled = false;
             container_uid = 0;

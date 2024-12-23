@@ -104,7 +104,7 @@ let
       };
       username = mkOption {
         type = types.str;
-        default = "pelican";
+        default = "root";
         description = "System username";
       };
       timezone = mkOption {
@@ -521,8 +521,6 @@ in
     system.activationScripts.makePelicanDir = lib.stringAfter [ "var" ] ''
       mkdir -p ${cfg.system.root_directory}
       mkdir -p ${cfg.system.tmp_directory}
-      chown pelican:pelican ${cfg.system.root_directory}
-      chown pelican:pelican ${cfg.system.tmp_directory}
       echo '${configFile}' > ${cfg.system.root_directory}/config.yml
     '';
     systemd.services.pelican-wings = {
@@ -534,8 +532,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        User = "pelican";
-        Group = "root";
+        User = "root";
         WorkingDirectory = "/var/lib/pelican";
         RuntimeDirectory = "pelican-wings";
         RuntimeDirectoryMode = "0750";
@@ -543,32 +540,12 @@ in
         PIDFile = "/run/pelican-wings/daemon.pid";
         ExecStartPre = [
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.system.tmp_directory}"
-          "+${pkgs.coreutils}/bin/chown pelican:pelican ${cfg.system.tmp_directory}"
         ];
         ExecStart = "${pelican-wings}/bin/pelican-wings --config ${cfg.system.root_directory}/config.yml";
         Restart = "always";
         RestartSec = "5s";
       };
     };
-
-    # Create user and group
-    users.users.pelican = {
-      group = "pelican";
-      isSystemUser = true;
-      home = "/var/lib/pelican";
-      createHome = true;
-      extraGroups = [ "docker" "letsencrypt" "root" ];
-      description = "Pelican Wings daemon user";
-    };
-
-    users.groups.pelican = { };
-
-    # Ensure the letsencrypt directory has proper permissions
-    system.activationScripts.letsencryptPermissions = lib.stringAfter [ "var" ] ''
-      if [ -d /etc/letsencrypt/live ]; then
-        ${pkgs.acl}/bin/setfacl -R -m g:letsencrypt:rX /etc/letsencrypt/{live,archive}
-      fi
-    '';
 
     networking.firewall.allowedTCPPorts = [ cfg.api.port cfg.system.sftp.bind_port ];
   };
