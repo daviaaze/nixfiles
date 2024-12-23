@@ -1,5 +1,5 @@
 keys:
-  - &thinkbook age1tpn3wn4l0vypr9wakz58smqcpznvuhrfc7p5gp0qnxteedadjg7qxph860
+  - &thinkbook age1aelpc8etfaqzn22034pnj4d4sx9vtct06h5w4v33kapdx8zy8adsvc0x5m
   - &homelab age1mws2js7l050fry5hx265rnkq8ayfvf6urp6ecjmr250quj3e2cmsnpa9vj
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
