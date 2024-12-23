@@ -34,5 +34,26 @@
           }
         ];
       };
+      nixosConfigurations.dvision-homelab = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs.inputs = inputs;
+        modules = [
+          ./modules
+          ./modules/dvision-homelab
+          lanzaboote.nixosModules.lanzaboote
+          home-manager.nixosModules.home-manager
+          chaotic.nixosModules.default
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs.inputs = inputs;
+              users.daviaaze.imports = [
+                ./home/homelab.nix
+              ];
+            };
+          }
+        ];
+      };
     };
 }

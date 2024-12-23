@@ -7,6 +7,7 @@
     jetbrains.datagrip
     openfortivpn
     postman
+    code-cursor
     (pkgs.callPackage ../packages/openfortivpn-webviewer.nix { })
     ffmpeg
   ];

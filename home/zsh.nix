@@ -10,7 +10,6 @@
     nil
     nixpkgs-fmt
     vscodium
-    code-cursor
   ];
 
   home.sessionVariables = {
