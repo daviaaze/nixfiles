@@ -49,6 +49,7 @@ in
         User = "nginx";
         Group = "nginx";
         Restart = "always";
+        WorkingDirectory = "/.config/beszel/agent";
         ExecStart = "${pkgs.beszel}/bin/beszel-agent";
         startLimitInterval = 180;
         startLimitBurst = 30;
@@ -62,6 +63,7 @@ in
         User = "nginx";
         Group = "nginx";
         Restart = "always";
+        WorkingDirectory = "/.config/beszel/hub";
         ExecStart = "${pkgs.beszel}/bin/beszel-hub serve --http '0.0.0.0:${toString cfg.hub.port}'";
         startLimitInterval = 180;
         startLimitBurst = 30;
