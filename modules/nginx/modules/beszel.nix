@@ -17,12 +17,12 @@ in
 
   config = mkIf cfg.enable {
     services.nginx.virtualHosts."${serverName}" = {
-      listen = [{ port = 80; addr="0.0.0.0"; }];
-      
+      listen = [{ port = 80; addr = "0.0.0.0"; }];
+
       locations = {
         "/" = {
           proxyPass = "http://localhost:${toString cfg.port}";
-          proxyWebsockets = true;  # Important for beszel
+          proxyWebsockets = true; # Important for beszel
           extraConfig = ''
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Host $host;
@@ -35,4 +35,4 @@ in
       };
     };
   };
-} 
+}

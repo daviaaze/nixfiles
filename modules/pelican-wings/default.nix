@@ -2,7 +2,7 @@
 
 with lib; let
   cfg = config.modules.pelican-wings;
-  pelican-wings = pkgs.callPackage ./package.nix {};
+  pelican-wings = pkgs.callPackage ./package.nix { };
 in
 {
   options = {
