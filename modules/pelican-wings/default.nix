@@ -3,7 +3,6 @@ with lib;
 let
   cfg = config.modules.pelican-wings;
   pelican-wings = pkgs.callPackage ./package.nix { };
-  dataDir = "/var/lib/pelican-wings";
 in
 {
   options.modules.pelican-wings = {
@@ -21,7 +20,6 @@ in
         Type = "simple";
         User = "pelican-wings";
         Group = "pelican-wings";
-        WorkingDirectory = dataDir;
         ExecStart = "${pelican-wings}/bin/pelican-wings";
         Restart = "always";
         RestartSec = "3";
@@ -37,17 +35,11 @@ in
     # Create user and group
     users.users.pelican-wings = {
       group = "pelican-wings";
-      home = dataDir;
-      createHome = true;
       isSystemUser = true;
+      extraGroups = [ "docker" ];
       description = "Pelican Wings daemon user";
     };
 
     users.groups.pelican-wings = {};
-
-    # Ensure data directory exists with correct permissions
-    systemd.tmpfiles.rules = [
-      "d ${dataDir} 0750 pelican-wings pelican-wings - -"
-    ];
   };
 }
