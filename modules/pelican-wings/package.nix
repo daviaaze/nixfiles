@@ -14,6 +14,6 @@ stdenv.mkDerivation rec {
   phases = [ "installPhase" ];
 
   installPhase = ''
-    install -D $src $out/bin/wings
+    install -D $src $out/bin/pelican-wings
   '';
 }
