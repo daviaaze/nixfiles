@@ -9,4 +9,8 @@
       extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
     };
   };
+
+  config.programs.zsh = {
+    enable = true;
+  };
 }
