@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     inputs.chaotic.nixosModules.default
     ./hardware.nix
