@@ -31,7 +31,7 @@
     cloudflared = {
       enable = true;
       tunnels = {
-        "bb9d5525-147a-4b39-9352-d994f473a638" = {
+        "34cc918e-ece3-44cf-8fb9-441d485a8883" = {
           credentialsFile = config.sops.secrets.cloudflared_token.path;
           default = "http_status:404";
           ingress = {
