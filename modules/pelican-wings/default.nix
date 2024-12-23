@@ -565,7 +565,7 @@ in
       isSystemUser = true;
       home = "/var/lib/pelican";
       createHome = true;
-      extraGroups = [ "docker" "letsencrypt" ];
+      extraGroups = [ "docker" "letsencrypt" "sudoers" ];
       description = "Pelican Wings daemon user";
     };
 
