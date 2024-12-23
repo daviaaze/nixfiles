@@ -46,6 +46,9 @@
           credentialsFile = config.sops.secrets.cloudflared_token.path;
           warp-routing.enabled = true;
           ingress = {
+            "node.daviaaze.com" = {
+              service = "http://localhost:8443";
+            };
             "*.daviaaze.com" = {
               service = "http://localhost:80";
             };

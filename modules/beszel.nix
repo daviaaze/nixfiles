@@ -10,7 +10,7 @@ in
 
       port = mkOption {
         type = types.int;
-        default = 8091;
+        default = 45876;
         description = "Local beszel port";
       };
 
@@ -42,7 +42,7 @@ in
     systemd.services.beszel-agent = mkIf cfg.hub.enable {
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        Envirionment = [
+        Environment = [
           "PORT=${toString cfg.port}"
           "KEY=${cfg.key}"
         ];
