@@ -2,7 +2,8 @@
 
 with lib; let
   cfg = config.modules.pelican-wings;
-in {
+in
+{
   options = {
     modules.pelican-wings = {
       enable = mkEnableOption "Pelican Wings";
@@ -11,11 +12,11 @@ in {
 
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ 8080 8443 ];
-    
+
     virtualisation.docker.enable = true;
 
     environment.systemPackages = [
-      ( pkgs.callPackage ./package.nix {} )
+      (pkgs.callPackage ./package.nix { })
     ];
 
     systemd.services.pelican-wings = {
@@ -23,7 +24,7 @@ in {
       after = [ "docker.service" ];
       requires = [ "docker.service" ];
       partOf = [ "docker.service" ];
-      
+
       serviceConfig = {
         User = "root";
         WorkingDirectory = "/etc/pelican";

@@ -1,4 +1,4 @@
-_ : {
+_: {
   imports = [
     ./locale.nix
     ./users.nix

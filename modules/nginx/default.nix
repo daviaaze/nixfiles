@@ -26,14 +26,14 @@ in
         The email address to use for ACME certificates.
       '';
     };
-};
+  };
 
   config = mkIf cfg.enable {
     services.nginx.enable = true;
 
     # Open ports in the firewall.
     networking.firewall.allowedTCPPorts = [ 80 443 ];
-    
+
     security.acme.acceptTerms = true;
     security.acme.defaults.email = cfg.acmeEmail;
   };
