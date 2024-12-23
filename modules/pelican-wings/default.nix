@@ -263,6 +263,11 @@ let
           };
         };
       };
+      allowed_mounts = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = "List of allowed mount points";
+      };
     };
   };
 
@@ -389,7 +394,7 @@ let
         is_internal: ${boolToString cfg.docker.network.is_internal}
         enable_icc: ${boolToString cfg.docker.network.enable_icc}
         network_mtu: ${toString cfg.docker.network.network_mtu}
-    allowed_mounts: ${builtins.toJSON cfg.allowedMounts}
+    allowed_mounts: ${builtins.toJSON cfg.system.allowed_mounts}
     remote: ${cfg.remote}
     Search:
       blacklisted_dirs: ${builtins.toJSON cfg.search.blacklisted_dirs}

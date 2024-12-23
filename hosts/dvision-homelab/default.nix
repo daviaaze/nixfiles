@@ -69,6 +69,7 @@
           enabled = true;
           timeout = 60;
         };
+        allowed_mounts = [ "/tmp/pelican" ];
       };
       docker.network = {
         interface = "172.18.0.1";
