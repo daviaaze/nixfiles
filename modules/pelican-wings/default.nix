@@ -553,7 +553,7 @@ in
 
         # Hardening measures
         ProtectSystem = "full";
-        PrivateTmp = false; # Need access to /tmp
+        PrivateTmp = true; # Need access to /tmp
         RemoveIPC = true;
         NoNewPrivileges = true;
       };
