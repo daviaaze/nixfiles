@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, config, ... }: {
   imports = [
     inputs.chaotic.nixosModules.default
     ./hardware.nix
@@ -28,6 +28,20 @@
   services = {
     openssh.enable = true;
     fwupd.enable = true;
+    cloudflared = {
+      enable = true;
+      tunnels = {
+        "bb9d5525-147a-4b39-9352-d994f473a638" = {
+          credentialsFile = config.sops.secrets.cloudflared_token.path;
+          default = "http_status:404";
+          ingress = {
+            "*.daviaaze.com" = {
+              service = "http://localhost:80";
+            };
+          };
+        };
+      };
+    };
   };
   virtualisation = {
     docker = {
