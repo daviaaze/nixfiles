@@ -11,7 +11,7 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.pelican-wings = {
-      description = "Wings Daemon";
+      description = "Pelican Wings Daemon";
       after = [ "network-online.target" "docker.service" ];
       wants = [ "network-online.target" "docker.service" ];
       partOf = [ "docker.service" ];
@@ -19,9 +19,9 @@ in
 
       serviceConfig = {
         Type = "simple";
-        User = "pelican-wings";
-        Group = "pelican-wings";
-        WorkingDirectory = "/var/lib/pelican-wings";
+        User = "pelican";
+        Group = "pelican";
+        WorkingDirectory = "/var/lib/pelican";
         LimitNOFILE = 4096;
         PIDFile = "/var/run/pelican-wings/daemon.pid";
         ExecStart = "${pelican-wings}/bin/pelican-wings --config /var/lib/pelican/config.yml";
