@@ -1,8 +1,9 @@
 { lib, config, ... }:
 with lib;
 let
-  cfg = config.modules.nginx.beszel;
-  serverName = "beszel.${config.modules.nginx.domainName}";
+  name = "beszel";
+  cfg = config.modules.nginx.${name};
+  serverName = "${name}.${config.modules.nginx.domainName}";
 in
 {
   options.modules.nginx.beszel = {
@@ -20,7 +21,7 @@ in
       
       locations = {
         "/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.port}";
+          proxyPass = "http://localhost:${toString cfg.port}";
           proxyWebsockets = true;  # Important for beszel
           extraConfig = ''
             proxy_set_header X-Real-IP $remote_addr;

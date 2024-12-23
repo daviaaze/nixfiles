@@ -15,7 +15,6 @@
 
   modules = {
     pelican-wings.enable = true;
-    cloudflared.enable = true;
     beszel = {
       enable = true;
       key = "daviaaze";
