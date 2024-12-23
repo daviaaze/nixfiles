@@ -20,6 +20,14 @@ in
       pelican-wings
     ];
 
+    users.groups.pelican = {};
+
+    users.users.pelican = {
+      isSystemUser = true;
+      group = "pelican";
+      extraGroups = [ "docker" ];
+    };
+
     systemd.services.pelican-wings = {
       description = "Wings Daemon";
       after = [ "docker.service" ];
@@ -27,7 +35,7 @@ in
       partOf = [ "docker.service" ];
 
       serviceConfig = {
-        User = "root";
+        User = "pelican";
         WorkingDirectory = "/var/lib/pelican-wings";
         LimitNOFILE = 4096;
         PIDFile = "/var/run/pelican-wings/daemon.pid";
