@@ -28,10 +28,10 @@ in
 
       serviceConfig = {
         User = "root";
-        WorkingDirectory = "/etc/pelican";
+        WorkingDirectory = "/var/lib/pelican-wings";
         LimitNOFILE = 4096;
-        PIDFile = "/var/run/wings/daemon.pid";
-        ExecStart = "${pelican-wings}/bin/wings";
+        PIDFile = "/var/run/pelican-wings/daemon.pid";
+        ExecStart = "${pelican-wings}/bin/pelican-wings";
         Restart = "on-failure";
         startLimitInterval = 180;
         startLimitBurst = 30;
