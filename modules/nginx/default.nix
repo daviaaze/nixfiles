@@ -32,7 +32,7 @@ in
     services.nginx.enable = true;
 
     # Open ports in the firewall.
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [ 80 ];
 
     security.acme.acceptTerms = true;
     security.acme.defaults.email = cfg.acmeEmail;

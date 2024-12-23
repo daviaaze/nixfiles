@@ -15,7 +15,7 @@ in
 
     port = mkOption {
       type = types.int;
-      default = 443;
+      default = 80;
       description = ''
         The port to use for this virtual host.
       '';
