@@ -68,9 +68,8 @@
         allowed_mounts = [];
       };
       docker.network = {
-        interface = "172.18.0.1";
-        dns = [ "1.1.1.1" "1.0.0.1" ];
-        IPv6 = true;
+         name = "host";
+         network_mode = "host";
       };
       remote = "https://panel.daviaaze.com";
     };
@@ -112,6 +111,10 @@
           default = "http_status:404";
         };
       };
+    };
+    openvscode-server = {
+      enable = true;
+      withoutConnectionToken = true;
     };
     cloudflare-dyndns = {
       enable = true;
