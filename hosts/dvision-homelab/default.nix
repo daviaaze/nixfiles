@@ -65,6 +65,7 @@
           bind_port = 2022;
         };
         timezone = "America/Sao_Paulo";
+        username = "pelican";
         user = {
           uid = 671;
           gid = 671;

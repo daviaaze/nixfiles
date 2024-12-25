@@ -524,6 +524,9 @@ in
       mkdir -p ${cfg.system.root_directory}
       mkdir -p ${cfg.system.tmp_directory}
       echo '${configFile}' > ${cfg.system.root_directory}/config.yml
+      chown -R pelican:pelican ${cfg.system.root_directory}
+      chown -R pelican:pelican ${cfg.system.tmp_directory}
+      chown -R pelican:pelican ${cfg.system.log_directory}
     '';
     systemd.services.pelican-wings = {
       description = "Pelican Wings Daemon";
