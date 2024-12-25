@@ -67,12 +67,12 @@
         timezone = "America/Sao_Paulo";
         username = "pelican";
         user = {
-          uid = 671;
-          gid = 671;
+          uid = 657;
+          gid = 657;
           rootless = {
             enabled = true;
-            container_uid = 671;
-            container_gid = 671;
+            container_uid = 657;
+            container_gid = 657;
           };
         };
         check_permissions_on_boot = false;
