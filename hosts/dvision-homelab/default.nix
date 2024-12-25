@@ -146,7 +146,16 @@
   };
 
   programs = {
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      enableBashCompletion = true;
+      autosuggestions.enable = true;
+      histSize = 500;
+      shellAliases = {
+        "update-local" = "sudo nixos-rebuild switch --flake ~/.nixfiles";
+        "update-remote" = "sudo nixos-rebuild switch --flake github:daviaaze/nixfiles";
+      };
+    };
     steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
