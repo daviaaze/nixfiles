@@ -40,7 +40,7 @@
         port = 8443;
         ssl = {
           enabled = true;
-          domain = "node.daviaaze.com";
+          domain = "sasqatch.daviaaze.com";
         };
         trusted_proxies = [
           "173.245.48.0/20"
