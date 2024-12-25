@@ -75,6 +75,7 @@
             container_gid = 671;
           };
         };
+        check_permissions_on_boot = false;
         crash_detection = {
           enabled = true;
           timeout = 60;
