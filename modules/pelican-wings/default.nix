@@ -334,6 +334,10 @@ let
     };
   };
 
+  ## TODO: I don't really know what approach to take over this config file,
+  ## at some point the program rewrites this file with more information.
+  ## I need to check if it is possible to use it in a read-only mode.
+
   configFile = ''
     debug: ${boolToString cfg.debug}
     app_name: ${cfg.appName}
@@ -441,12 +445,12 @@ in
 
     system = mkOption {
       type = systemOpts;
-      default = { 
+      default = {
         sftp = {
           bind_port = 2022;
         };
         data = "${cfg.system.root_directory}/volumes";
-       };
+      };
       description = "System configuration";
     };
 
@@ -532,7 +536,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        User = "root";
+        User = "pelican";
         WorkingDirectory = "/var/lib/pelican";
         RuntimeDirectory = "pelican-wings";
         RuntimeDirectoryMode = "0750";

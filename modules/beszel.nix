@@ -39,6 +39,15 @@ in
       pkgs.beszel
     ];
 
+    users.users.beszel = {
+        isSystemUser = true;
+        description = "Beszel monitoring system";
+        group = "beszel";
+        extraGroups = [ "docker" ];
+      };
+
+    users.groups.beszel = {};
+
     systemd.services.beszel-agent = mkIf cfg.hub.enable {
       wantedBy = [ "multi-user.target" ];
       environment = {
@@ -46,8 +55,8 @@ in
         KEY = cfg.key;
       };
       serviceConfig = {
-        User = "nginx";
-        Group = "nginx";
+        User = "beszel";
+        Group = "beszel";
         Restart = "always";
         WorkingDirectory = "/var/lib/beszel/agent";
         ExecStart = "${pkgs.beszel}/bin/beszel-agent";

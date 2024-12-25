@@ -15,13 +15,26 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "dvision-homelab";
 
+  networking.firewall.enable = true;
+
+  users.groups.pelican = {
+    gid = 657;
+  };
+
+  users.users.pelican = {
+    isSystemUser = true;
+    uid = 657;
+    group = "pelican";
+    extraGroups = [ "docker" ];
+  };
+
   modules = {
     pelican-wings = {
       enable = true;
       debug = true;
       uuid = "1d8613be-bb19-4b91-8d99-6e49c447e48a";
       tokenId = "8Q0mz63fiTZKjLW3";
-      token = "dlVjopbgFqRWt3kfFa9nJnhilsmwT9JxANFSBnO5FJX1Nalu0uGhY6ZBWjbfjX1f";
+      token = "";
       api = {
         host = "0.0.0.0";
         port = 8443;
@@ -53,12 +66,12 @@
         };
         timezone = "America/Sao_Paulo";
         user = {
-          uid = 0;
-          gid = 0;
+          uid = 671;
+          gid = 671;
           rootless = {
-            enabled = false;
-            container_uid = 0;
-            container_gid = 0;
+            enabled = true;
+            container_uid = 671;
+            container_gid = 671;
           };
         };
         crash_detection = {
