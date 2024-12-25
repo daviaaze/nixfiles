@@ -9,9 +9,6 @@
   };
 
   sops.secrets.cloudflare_api_token = { };
-  sops.secrets.pelican_wings_token = {
-    owner = "pelican";
-  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -37,7 +34,7 @@
       debug = true;
       uuid = "1d8613be-bb19-4b91-8d99-6e49c447e48a";
       tokenId = "8Q0mz63fiTZKjLW3";
-      token = "${config.sops.secrets.pelican_wings_token.path}";
+      token = "dlVjopbgFqRWt3kfFa9nJnhilsmwT9JxANFSBnO5FJX1Nalu0uGhY6ZBWjbfjX1f";
       api = {
         host = "0.0.0.0";
         port = 8443;
