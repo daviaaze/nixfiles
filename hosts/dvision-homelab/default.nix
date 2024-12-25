@@ -78,11 +78,11 @@
           enabled = true;
           timeout = 60;
         };
-        allowed_mounts = [];
+        allowed_mounts = [ ];
       };
       docker.network = {
-         name = "host";
-         network_mode = "host";
+        name = "host";
+        network_mode = "host";
       };
       remote = "https://panel.daviaaze.com";
     };

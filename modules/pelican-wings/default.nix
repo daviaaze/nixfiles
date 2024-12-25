@@ -443,12 +443,12 @@ in
 
     system = mkOption {
       type = systemOpts;
-      default = { 
+      default = {
         sftp = {
           bind_port = 2022;
         };
         data = "${cfg.system.root_directory}/volumes";
-       };
+      };
       description = "System configuration";
     };
 

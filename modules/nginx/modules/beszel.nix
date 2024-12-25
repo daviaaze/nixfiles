@@ -22,9 +22,9 @@ in
         { port = 80; addr = "[::1]"; }
         { port = 80; addr = "0.0.0.0"; }
       ];
-      
+
       serverName = serverName;
-      
+
       locations = {
         "/" = {
           proxyPass = "http://localhost:${toString cfg.port}";

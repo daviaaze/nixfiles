@@ -40,13 +40,13 @@ in
     ];
 
     users.users.beszel = {
-        isSystemUser = true;
-        description = "Beszel monitoring system";
-        group = "beszel";
-        extraGroups = [ "docker" ];
-      };
+      isSystemUser = true;
+      description = "Beszel monitoring system";
+      group = "beszel";
+      extraGroups = [ "docker" ];
+    };
 
-    users.groups.beszel = {};
+    users.groups.beszel = { };
 
     systemd.services.beszel-agent = mkIf cfg.hub.enable {
       wantedBy = [ "multi-user.target" ];

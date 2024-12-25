@@ -33,7 +33,7 @@ in
     services.nginx = {
       enable = true;
       recommendedProxySettings = true;
-      
+
       # Add a default virtual host that returns 404
       virtualHosts."_" = {
         listen = [
