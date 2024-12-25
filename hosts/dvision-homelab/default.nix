@@ -10,6 +10,8 @@
 
   sops.secrets.cloudflare_api_token = { };
 
+  sops.secrets.tailscale_auth_key = { };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -144,6 +146,11 @@
       ipv6 = true;
       proxied = false;
       deleteMissing = true;
+    };
+    tailscale = {
+      enable = true;
+      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
+      openFirewall = true;
     };
   };
   virtualisation = {
