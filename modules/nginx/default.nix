@@ -46,8 +46,5 @@ in
         };
       };
     };
-
-    # Open ports in the firewall.
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }

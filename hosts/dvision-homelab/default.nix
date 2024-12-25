@@ -28,6 +28,11 @@
     extraGroups = [ "docker" ];
   };
 
+  networking.firewall.allowedTCPPortRanges = [{
+    from = 25500;
+    to = 25600;
+  }];
+
   modules = {
     pelican-wings = {
       enable = true;
