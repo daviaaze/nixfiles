@@ -278,53 +278,53 @@ let
         type = types.submodule {
           options = {
             interface = mkOption {
-              type = types.str;
-              default = "172.18.0.1";
+              type = types.nullOr types.str;
+              default = null;
               description = "Docker network interface";
             };
             dns = mkOption {
-              type = types.listOf types.str;
-              default = [ "1.1.1.1" "1.0.0.1" ];
+              type = types.nullOr (types.listOf types.str);
+              default = null;
               description = "DNS servers";
             };
             name = mkOption {
-              type = types.str;
-              default = "pelican_nw";
+              type = types.nullOr types.str;
+              default = null;
               description = "Network name";
             };
             ispn = mkOption {
-              type = types.bool;
-              default = false;
+              type = types.nullOr types.bool;
+              default = null;
               description = "Is PurgeNet";
             };
             IPv6 = mkOption {
-              type = types.bool;
-              default = true;
+              type = types.nullOr types.bool;
+              default = null;
               description = "Enable IPv6";
             };
             driver = mkOption {
-              type = types.str;
-              default = "bridge";
+              type = types.nullOr types.str;
+              default = null;
               description = "Network driver";
             };
             network_mode = mkOption {
-              type = types.str;
-              default = "pelican_nw";
+              type = types.nullOr types.str;
+              default = null;
               description = "Network mode";
             };
             is_internal = mkOption {
-              type = types.bool;
-              default = false;
+              type = types.nullOr types.bool;
+              default = null;
               description = "Is internal network";
             };
             enable_icc = mkOption {
-              type = types.bool;
-              default = true;
+              type = types.nullOr types.bool;
+              default = null;
               description = "Enable inter-container communication";
             };
             network_mtu = mkOption {
-              type = types.int;
-              default = 1500;
+              type = types.nullOr types.int;
+              default = null;
               description = "Network MTU";
             };
           };
@@ -386,16 +386,16 @@ let
         remove_backups_on_server_delete: ${boolToString cfg.system.backups.remove_backups_on_server_delete}
     docker:
       network:
-        interface: ${cfg.docker.network.interface}
-        dns: ${builtins.toJSON cfg.docker.network.dns}
-        name: ${cfg.docker.network.name}
-        ispn: ${boolToString cfg.docker.network.ispn}
-        IPv6: ${boolToString cfg.docker.network.IPv6}
-        driver: ${cfg.docker.network.driver}
-        network_mode: ${cfg.docker.network.network_mode}
-        is_internal: ${boolToString cfg.docker.network.is_internal}
-        enable_icc: ${boolToString cfg.docker.network.enable_icc}
-        network_mtu: ${toString cfg.docker.network.network_mtu}
+        ${optionalString (cfg.docker.network.interface != null) ''interface: ${cfg.docker.network.interface}''}
+        ${optionalString (cfg.docker.network.dns != null) ''dns: ${builtins.toJSON cfg.docker.network.dns}''}
+        ${optionalString (cfg.docker.network.name != null) ''name: ${cfg.docker.network.name}''}
+        ${optionalString (cfg.docker.network.ispn != null) ''ispn: ${boolToString cfg.docker.network.ispn}''}
+        ${optionalString (cfg.docker.network.IPv6 != null) ''IPv6: ${boolToString cfg.docker.network.IPv6}''}
+        ${optionalString (cfg.docker.network.driver != null) ''driver: ${cfg.docker.network.driver}''}
+        ${optionalString (cfg.docker.network.network_mode != null) ''network_mode: ${cfg.docker.network.network_mode}''}
+        ${optionalString (cfg.docker.network.is_internal != null) ''is_internal: ${boolToString cfg.docker.network.is_internal}''}
+        ${optionalString (cfg.docker.network.enable_icc != null) ''enable_icc: ${boolToString cfg.docker.network.enable_icc}''}
+        ${optionalString (cfg.docker.network.network_mtu != null) ''network_mtu: ${toString cfg.docker.network.network_mtu}''}
     allowed_mounts: ${builtins.toJSON cfg.system.allowed_mounts}
     remote: ${cfg.remote}
     Search:
