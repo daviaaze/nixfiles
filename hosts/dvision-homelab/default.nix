@@ -134,10 +134,10 @@
     cloudflare-dyndns = {
       enable = true;
       apiTokenFile = config.sops.secrets.cloudflare_api_token.path;
-      domains = [ "node.daviaaze.com" ];
+      domains = [ "sasqatch.daviaaze.com" ];
       ipv4 = true;
       ipv6 = true;
-      proxied = true;
+      proxied = false;
       deleteMissing = true;
     };
   };
