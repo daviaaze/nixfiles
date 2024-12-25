@@ -534,7 +534,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        User = "root";
+        User = "pelican";
         WorkingDirectory = "/var/lib/pelican";
         RuntimeDirectory = "pelican-wings";
         RuntimeDirectoryMode = "0750";
