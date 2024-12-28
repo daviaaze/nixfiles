@@ -1,10 +1,11 @@
 { pkgs, config, ... }: {
-  boot.initrd.services.udev.rules = ''
-    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"
-  '';
-
-  boot.extraModulePackages = [ (config.boot.kernelPackages.callPackage ../../packages/ideapad-laptop-tb.nix { }) ];
-  boot.blacklistedKernelModules = [ "ideapad-laptop" ];
+  boot = {
+    initrd.services.udev.rules = ''
+      ACTION=="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"
+    '';
+    extraModulePackages = [ (config.boot.kernelPackages.callPackage ../../packages/ideapad-laptop-tb.nix { }) ];
+    blacklistedKernelModules = [ "ideapad-laptop" ];
+  };
 
   services = {
     thinkfan = {

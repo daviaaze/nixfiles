@@ -4,20 +4,31 @@
     ./hardware.nix
   ];
 
-  sops.secrets.cloudflared_token = {
-    owner = "cloudflared";
+  sops = {
+    secrets = {
+      cloudflared_token = {
+        owner = "cloudflared";
+      };
+      cloudflare_api_token = { };
+      tailscale_auth_key = { };
+    };
   };
-
-  sops.secrets.cloudflare_api_token = { };
-
-  sops.secrets.tailscale_auth_key = { };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  networking.hostName = "dvision-homelab";
 
-  networking.firewall.enable = true;
+  networking = {
+    hostName = "dvision-homelab";
+    firewall = {
+      enable = true;
+      allowedTCPPortRanges = [{
+        from = 25500;
+        to = 25600;
+      }];
+    };
+    networkmanager.enable = true;
+  };
 
   users.groups.pelican = {
     gid = 657;
@@ -29,11 +40,6 @@
     group = "pelican";
     extraGroups = [ "docker" ];
   };
-
-  networking.firewall.allowedTCPPortRanges = [{
-    from = 25500;
-    to = 25600;
-  }];
 
   modules = {
     pelican-wings = {
@@ -152,7 +158,20 @@
       authKeyFile = config.sops.secrets.tailscale_auth_key.path;
       openFirewall = true;
     };
+    xserver = {
+      enable = true;
+      desktopManager.gnome.enable = true;
+      displayManager.gdm = {
+        enable = true;
+        wayland = true;
+      };
+      xkb = {
+        layout = "br";
+        variant = "";
+      };
+    };
   };
+
   virtualisation = {
     docker = {
       enable = true;
@@ -172,7 +191,7 @@
     };
     steam = {
       enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      remotePlay.openFirewall = true;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
       gamescopeSession.enable = true;
     };
@@ -209,42 +228,25 @@
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];
+    gnome.excludePackages = with pkgs; [
+      gnome-tour
+      gnome-connections
+      epiphany
+      geary
+      evince
+      gnome-terminal
+      gnome-console
+    ];
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
   xdg.portal.wlr.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  # Enable the GNOME Desktop Environment.
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    wayland = true;
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
   };
-
-  environment.gnome.excludePackages = (with pkgs; [
-    # for packages that are pkgs.*
-    gnome-tour
-    gnome-connections
-    # for packages that are pkgs.gnome.*
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-terminal
-    gnome-console
-  ]);
-  networking.networkmanager.enable = true;
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "br";
-    xkb.variant = "";
-  };
-
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
 
   system.stateVersion = "23.11";
 }

@@ -6,11 +6,7 @@
       shell = pkgs.zsh;
       description = "Davi Alves de Azevedo";
       hashedPasswordFile = config.sops.secrets.daviaaze_password.path;
-      extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "audio" "docker" "plugdev" ];
     };
-  };
-
-  config.programs.zsh = {
-    enable = true;
   };
 }

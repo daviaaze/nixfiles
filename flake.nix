@@ -41,10 +41,12 @@
             ./hosts/${hostname}
             inputs.sops-nix.nixosModules.sops
             {
-              sops.defaultSopsFile = ./secrets/secrets.yaml;
-              sops.defaultSopsFormat = "yaml";
-              sops.age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt";
-              sops.secrets.daviaaze_password.neededForUsers = true;
+              sops = {
+                defaultSopsFile = ./secrets/secrets.yaml;
+                defaultSopsFormat = "yaml";
+                age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt";
+                secrets.daviaaze_password.neededForUsers = true;
+              };
             }
           ];
         };

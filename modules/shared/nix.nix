@@ -1,5 +1,5 @@
 # Common Nix settings shared across configurations
-{ ... }: {
+_: {
   nix = {
     settings = {
       trusted-users = [ "root" "wheel" ];

@@ -5,8 +5,8 @@ let
   name = "panel";
   cfg = config.modules.nginx.${name};
   serverName = "${name}.${config.modules.nginx.domainName}";
-  port = cfg.port;
-  enableSSL = cfg.enableSSL;
+  inherit (cfg) port;
+  inherit (cfg) enableSSL;
   dir = "${config.modules.pelican-panel.directory}/public";
 in
 {
@@ -58,7 +58,7 @@ in
         { port = 80; addr = "0.0.0.0"; }
       ];
 
-      serverName = serverName;
+      inherit serverName;
 
       forceSSL = enableSSL;
       enableACME = enableSSL;

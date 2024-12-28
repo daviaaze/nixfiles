@@ -23,7 +23,7 @@ in
         { port = 80; addr = "0.0.0.0"; }
       ];
 
-      serverName = serverName;
+      inherit serverName;
 
       locations = {
         "/" = {

@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./zsh.nix
     ./services.nix
@@ -11,10 +11,6 @@
     homeDirectory = "/home/daviaaze";
     stateVersion = "23.11";
     enableNixpkgsReleaseCheck = true;
-
-    packages = with pkgs; [
-      inputs.zen-browser.packages.${pkgs.system}.default
-    ];
   };
 
   programs = {
