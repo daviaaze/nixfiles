@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/pelican-dev/wings/releases/download/${version}/wings_linux_amd64";
-    hash = "sha256-FW9At4NGh/ywrHUUanes2Srywb/luvozinTl0BZ5wZY=";
+    hash = "sha256-YaS1bthNSeWXH5drc2yensRqsRAOa2VXvivJOaPybqc=";
   };
 
   buildInputs = [ docker gnutar ];
