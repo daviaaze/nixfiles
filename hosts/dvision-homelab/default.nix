@@ -149,7 +149,7 @@
       apiTokenFile = config.sops.secrets.cloudflare_api_token.path;
       domains = [ "sasqatch.daviaaze.com" ];
       ipv4 = true;
-      ipv6 = true;
+      ipv6 = false;
       proxied = false;
       deleteMissing = true;
     };
