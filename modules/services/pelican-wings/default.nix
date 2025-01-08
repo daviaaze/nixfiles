@@ -387,7 +387,6 @@ let
     docker:
       network:
         ${optionalString (cfg.docker.network.interface != null) ''interface: ${cfg.docker.network.interface}''}
-        ${optionalString (cfg.docker.network.dns != null) ''dns: ${builtins.toJSON cfg.docker.network.dns}''}
         ${optionalString (cfg.docker.network.name != null) ''name: ${cfg.docker.network.name}''}
         ${optionalString (cfg.docker.network.ispn != null) ''ispn: ${boolToString cfg.docker.network.ispn}''}
         ${optionalString (cfg.docker.network.IPv6 != null) ''IPv6: ${boolToString cfg.docker.network.IPv6}''}
