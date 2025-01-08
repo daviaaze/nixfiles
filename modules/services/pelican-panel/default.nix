@@ -3,6 +3,7 @@
 with lib; let
   cfg = config.modules.pelican-panel;
   dir = cfg.directory;
+  version = "v1.0.0-beta9";
 in
 {
   options = {
@@ -35,7 +36,7 @@ in
       pkgs.php83Extensions.zip
       pkgs.php83Extensions.intl
       pkgs.php83Extensions.sqlite3
-      (import ./pelican-install.nix { inherit pkgs; inherit dir; })
+      (import ./pelican-install.nix { inherit pkgs; inherit dir; inherit version; })
       (import ./pelican-update.nix { inherit pkgs; inherit dir; })
     ];
 

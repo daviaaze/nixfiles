@@ -1,5 +1,5 @@
 { stdenv, lib, fetchFromGitHub, kernel }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "samsung-galaxybook";
   version = "0.1";
 

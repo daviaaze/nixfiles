@@ -1,18 +1,19 @@
 { inputs, pkgs, ... }: {
   imports = [
-    ./zsh.nix
-    ./services.nix
-    ./gnome.nix
-    ./work.nix
-    ./gaming.nix
-    ./wayland.nix
+    ./features/desktop
+    ./features/gaming
+    ./features/work
+    ./features/cli
+    ./programs
   ];
+
   home = {
     username = "daviaaze";
     homeDirectory = "/home/daviaaze";
     stateVersion = "23.11";
     enableNixpkgsReleaseCheck = true;
 
+    # Core packages that don't fit into specific categories
     packages = with pkgs; [
       spotify
       stremio
@@ -23,11 +24,9 @@
     ];
   };
 
-  programs = {
-    home-manager.enable = true;
-  };
+  programs.home-manager.enable = true;
 
-  # Properly handle GTK themes under Wayland
+  # Global GTK configuration
   gtk = {
     enable = true;
     theme = {

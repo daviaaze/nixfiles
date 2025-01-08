@@ -26,14 +26,15 @@
           specialArgs = {
             inherit inputs system;
             pkgs = import packages {
-              inherit system; config = {
-              allowUnfree = true;
-              allowBroken = true;
-              allowInsecure = true;
-              permittedInsecurePackages = [
-                "electron-28.3.3"
-              ];
-            };
+              inherit system;
+              config = {
+                allowUnfree = true;
+                allowBroken = true;
+                allowInsecure = true;
+                permittedInsecurePackages = [
+                  "electron-28.3.3"
+                ];
+              };
             };
           };
           modules = [

@@ -265,7 +265,7 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1734369085,
+        "lastModified": 1734736080,
         "narHash": "sha256-UEy4NbLSRBV6c+PTmeeVe5P9RiYRtf4G0QaJLUqZznY=",
         "path": "/home/daviaaze/Projects/Lux/cli",
         "type": "path"

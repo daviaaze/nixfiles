@@ -8,6 +8,6 @@
     openfortivpn
     postman
     code-cursor
-    (pkgs.callPackage ../packages/openfortivpn-webviewer.nix { })
+    (pkgs.callPackage ../../../packages/openfortivpn-webviewer.nix {})
   ];
 }

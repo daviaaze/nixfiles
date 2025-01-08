@@ -4,7 +4,7 @@
     libgnome-keyring
     gnome-control-center
     gensio
-    pkgs.adwaita-icon-theme
+    adwaita-icon-theme
     gnomeExtensions.vitals
     gnomeExtensions.appindicator
     gnomeExtensions.wireless-hid
@@ -12,7 +12,7 @@
     gnomeExtensions.steal-my-focus-window
     gnomeExtensions.gsconnect
     gnomeExtensions.caffeine
-    (callPackage ../packages/pano.nix { })
+    (pkgs.callPackage ../../../packages/pano.nix {})
     smile
     pwvucontrol
   ];

@@ -1,4 +1,4 @@
-{ pkgs, dir }:
+{ pkgs, dir, version }:
 
 pkgs.writeShellScriptBin "pelican-install" ''
   DIR=${dir}
@@ -13,7 +13,7 @@ pkgs.writeShellScriptBin "pelican-install" ''
   cd $DIR
 
   echo "Downloading Pelican panel ..."
-  curl -L https://github.com/pelican-dev/panel/releases/latest/download/panel.tar.gz | tar -xzv
+  curl -L https://github.com/pelican-dev/panel/releases/${version}/download/panel.tar.gz | tar -xzv
   echo "Installing Pelican panel using composer ..."
   yes | composer install --no-dev --optimize-autoloader
 
