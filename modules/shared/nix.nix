@@ -20,8 +20,4 @@ _: {
       dates = [ "weekly" ];
     };
   };
-
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
 }

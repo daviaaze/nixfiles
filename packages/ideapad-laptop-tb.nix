@@ -13,8 +13,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "ferstar";
     repo = "ideapad-laptop-tb";
-    rev = "efbc768ad404c3beb8ed988127c8ae05d5608f6b";
-    hash = "sha256-DiHwkvU6y1O2Cgl4Y3v+Yq5eIIdeyIZgxQ0KEwAxloM=";
+    rev = "dc534d7d627901541c5119ff90024e9d8347ec70";
+    hash = "sha256-Lq61QlpMjbWxyg/fldBKZGNKP+Z6Rd6tC5WcrNP/Q8A=";
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;

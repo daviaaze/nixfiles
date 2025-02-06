@@ -8,9 +8,21 @@
         useGlobalPkgs = true;
         useUserPackages = true;
         extraSpecialArgs.inputs = inputs;
-        users.daviaaze.imports = [
-          ../../home
+        sharedModules = [
+          inputs.sops-nix.homeManagerModules.sops
         ];
+        users.daviaaze = {
+          sops = {
+            age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt"; # must have no password!
+            # It's also possible to use a ssh key, but only when it has no password:
+            #age.sshKeyPaths = [ "/home/user/path-to-ssh-key" ];
+            defaultSopsFile = ../../secrets/secrets.yaml;
+            secrets.work_npm_token = { };
+          };
+          imports = [
+            ../../home
+          ];
+        };
       };
     }
   ];
@@ -18,13 +30,25 @@
   networking.hostName = "dvision-thinkbook";
 
   services = {
-    fwupd.enable = true;
-    udisks2.enable = true;
-    cpupower-gui.enable = true;
     pipewire.enable = true;
     tailscale.enable = true;
     openssh.enable = true;
-    pcscd.enable = true;
+    power-profiles-daemon.enable = false;
+    thermald.enable = true;
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        charger = {
+          governor = "performance";
+          turbo = "auto";
+          scaling_min_freq = 2000000; # 2.0 GHz minimum
+        };
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+      };
+    };
   };
 
   virtualisation = {
@@ -41,25 +65,20 @@
       };
     };
     firewall = {
-      enable = true;
+      enable = false;
       checkReversePath = "loose";
-      trustedInterfaces = [ "br-824ccdbb8b3d" ];
+      trustedInterfaces = [ "br-8ee421ae204e" ];
     };
   };
 
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance"; # Override default governor
+  };
   programs = {
     zsh.enable = true;
-    noisetorch.enable = true;
-    gnupg.agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-curses;
-      enableSSHSupport = true;
-    };
     steam = {
       enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      extraCompatPackages = [ pkgs.proton-ge-bin ];
-      gamescopeSession.enable = true;
     };
   };
 
@@ -67,69 +86,26 @@
     nerd-fonts.fira-code
   ];
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
-
   environment = {
-    sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 = (
-      pkgs.lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" (
-        with pkgs.gst_all_1;
-        [
-          gst-plugins-good
-          gst-plugins-bad
-          gst-plugins-ugly
-          gst-libav
-        ]
-      )
-    );
     systemPackages = with pkgs; [
       direnv
       git
-      glib
-      libva
-      usbutils
-      exfat
+
       openssl
-      virt-manager
-      virt-viewer
-      spice
-      spice-gtk
-      spice-protocol
-      win-virtio
-      win-spice
-      intelmetool # For Intel ME tools
-      chipsec # For platform security assessment
-      fwts # Firmware test suite
       bitwarden-desktop
-      devbox
-      mesa
-      openh264
-      ffmpeg
-      gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-good
-      gst_all_1.gst-plugins-bad
-      gst_all_1.gst-plugins-ugly
-      gst_all_1.gst-libav
-      gst_all_1.gst-vaapi
     ];
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  xdg.portal.wlr.enable = true;
-
-  # Enable the GNOME Desktop Environment.
   # Enable the GNOME Desktop Environment.
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm = {
     enable = true;
     wayland = true;
   };
+
+  time.hardwareClockInLocalTime = true;
 
   environment.gnome.excludePackages = (with pkgs; [
     # for packages that are pkgs.*
@@ -149,5 +125,18 @@
     xkb.variant = "";
   };
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      vpl-gpu-rt
+      vaapiIntel
+    ];
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
   system.stateVersion = "23.11";
 }

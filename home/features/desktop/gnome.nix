@@ -12,7 +12,7 @@
     gnomeExtensions.steal-my-focus-window
     gnomeExtensions.gsconnect
     gnomeExtensions.caffeine
-    (pkgs.callPackage ../../../packages/pano.nix {})
+    (pkgs.callPackage ../../../packages/pano.nix { })
     smile
     pwvucontrol
   ];

@@ -1,5 +1,5 @@
 _: {
-  nixpkgs.overlays.default = 
+  nixpkgs.overlays.default =
     final: prev: {
       # Custom packages
       openfortivpn-webviewer = final.callPackage ../packages/openfortivpn-webviewer.nix { };

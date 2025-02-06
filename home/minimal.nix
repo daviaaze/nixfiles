@@ -1,10 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ./zsh.nix
-    ./services.nix
-    ./gnome.nix
-    ./gaming.nix
-    ./wayland.nix
+    ./features/cli
   ];
   home = {
     username = "daviaaze";

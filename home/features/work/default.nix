@@ -2,4 +2,4 @@
   imports = [
     ./work.nix
   ];
-} 
+}

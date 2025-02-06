@@ -10,15 +10,18 @@
 
   boot.loader = {
     efi.canTouchEfiVariables = true;
-    systemd-boot.enable = lib.mkForce true;
-    systemd-boot.configurationLimit = 5;
+    systemd-boot.enable = lib.mkForce false;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
-
+  boot.kernelParams = [ "i915.force_probe=a720" "intel_pstate=active" "processor.ignore_ppc=1" ];
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   fileSystems."/" =
     {
@@ -54,8 +57,8 @@
   swapDevices =
     [
       {
-        device = "/dev/nvme0n1p4";
-        randomEncryption = true;
+        device = "/dev/disk/by-partlabel/linux-swap";
+        randomEncryption.enable = true;
       }
     ];
 

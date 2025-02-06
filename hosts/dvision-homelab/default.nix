@@ -201,13 +201,6 @@
     nerd-fonts.fira-code
   ];
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowBroken = true;
-    };
-  };
-
   environment = {
     systemPackages = with pkgs; [
       firmware-updater
