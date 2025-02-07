@@ -1,5 +1,5 @@
 # Common Nix settings shared across configurations
-_: {
+{ config, ... }: {
   nix = {
     settings = {
       trusted-users = [ "root" "wheel" ];
@@ -8,6 +8,10 @@ _: {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
     };
+
+    extraOptions = ''
+      !include ${config.sops.secrets.nix_access_tokens.path}
+    '';
 
     gc = {
       automatic = true;

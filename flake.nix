@@ -16,7 +16,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    luxuryescapes-cli.url = "path:/home/daviaaze/Projects/Lux/cli";
     zen-browser.url = "github:daviaaze/zen-browser-flake";
   };
   outputs = { self, nixpkgs, chaotic, home-manager, vscode-server, lanzaboote, sops-nix, flake-utils, ... }@inputs:
@@ -50,6 +49,10 @@
                 defaultSopsFormat = "yaml";
                 age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt";
                 secrets.daviaaze_password.neededForUsers = true;
+                secrets.nix_access_tokens = {
+                  mode = "0440";
+                  neededForUsers = true;
+                };
               };
             }
           ];
