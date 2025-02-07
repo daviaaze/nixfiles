@@ -7,11 +7,9 @@
       keep-derivations = true;
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
-    };
+      access-keys-file = config.sops.secrets.nix_access_tokens.path;
 
-    extraOptions = ''
-      !include ${config.sops.secrets.nix_access_tokens.path}
-    '';
+    };
 
     gc = {
       automatic = true;

@@ -18,7 +18,7 @@
     };
     zen-browser.url = "github:daviaaze/zen-browser-flake";
   };
-  outputs = { self, nixpkgs, chaotic, home-manager, vscode-server, lanzaboote, sops-nix, flake-utils, ... }@inputs:
+  outputs = { nixpkgs, chaotic, home-manager, vscode-server, lanzaboote, sops-nix, flake-utils, ... }@inputs:
     let
       mkSystem = system: hostname:
         nixpkgs.lib.nixosSystem {

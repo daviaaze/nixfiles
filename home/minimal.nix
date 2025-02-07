@@ -11,6 +11,7 @@
 
   programs = {
     home-manager.enable = true;
+    micro.enable = true;
   };
 
   # Properly handle GTK themes under Wayland
