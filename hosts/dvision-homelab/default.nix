@@ -22,7 +22,7 @@
     hostName = "dvision-homelab";
     firewall = {
       enable = true;
-      allowedTCPPorts = [6900 6121 5121];
+      allowedTCPPorts = [ 6900 6121 5121 2456 2457 ];
       allowedTCPPortRanges = [{
         from = 25500;
         to = 25600;
