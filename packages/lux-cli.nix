@@ -7,6 +7,7 @@ mkYarnPackage rec {
     owner = "lux-group";
     repo = "cli";
     rev = "main";
+    hash = "";
   };
 
   nativeBuildInputs = [
