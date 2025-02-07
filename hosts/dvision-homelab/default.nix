@@ -140,10 +140,7 @@
         };
       };
     };
-    openvscode-server = {
-      enable = true;
-      withoutConnectionToken = true;
-    };
+    vscode-server.enable = true;
     cloudflare-dyndns = {
       enable = true;
       apiTokenFile = config.sops.secrets.cloudflare_api_token.path;

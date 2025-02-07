@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +19,7 @@
     luxuryescapes-cli.url = "path:/home/daviaaze/Projects/Lux/cli";
     zen-browser.url = "github:daviaaze/zen-browser-flake";
   };
-  outputs = { self, nixpkgs, chaotic, home-manager, lanzaboote, sops-nix, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, chaotic, home-manager, vscode-server, lanzaboote, sops-nix, flake-utils, ... }@inputs:
     let
       mkSystem = system: hostname:
         nixpkgs.lib.nixosSystem {
@@ -41,6 +42,7 @@
             ./modules
             ./hosts/${hostname}
             lanzaboote.nixosModules.lanzaboote
+            vscode-server.nixosModules.default
             inputs.sops-nix.nixosModules.sops
             {
               sops = {
