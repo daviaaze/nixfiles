@@ -9,6 +9,7 @@
     nil
     nixpkgs-fmt
     vscodium
+    micro
   ];
 
   sops = {
@@ -19,7 +20,7 @@
   };
 
   home.sessionVariables = {
-    EDITOR = "codium";
+    EDITOR = "micro";
     BROWSER = "zen";
     TERMINAL = "ghostty";
   };
@@ -45,7 +46,7 @@
       historySubstringSearch.enable = true;
       shellAliases = {
         update = "sudo nixos-rebuild switch --upgrade --flake github:daviaaze/nixfiles";
-        update-local = "sudo nixos-rebuild switch --upgrade --flake ~/.nixfiles";
+        update-local = "nh os switch";
         test-local = "sudo nixos-rebuild test --flake ~/.nixfiles";
         update-flake = "sudo nix flake update ~/.nixfiles;";
         ls = "exa --color=always --icons";
@@ -70,7 +71,7 @@
       initExtra = ''
         export NPM_TOKEN=$(cat ${config.sops.secrets.work_npm_token.path})
         export GITHUB_TOKEN=$(cat ${config.sops.secrets.github_token.path})
-        ${pkgs.neofetch}/bin/neofetch
+        ${pkgs.lib.getExe pkgs.fastfetch}
       '';
     };
     starship = {

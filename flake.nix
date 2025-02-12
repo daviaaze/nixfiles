@@ -53,10 +53,6 @@
                 defaultSopsFormat = "yaml";
                 age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt";
                 secrets.daviaaze_password.neededForUsers = true;
-                secrets.nix_access_tokens = {
-                  mode = "0440";
-                  neededForUsers = true;
-                };
               };
             }
           ];

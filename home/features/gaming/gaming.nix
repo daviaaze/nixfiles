@@ -3,7 +3,7 @@
     prismlauncher # Minecraft launcher
     moonlight-qt # Game streaming
     bottles # Windows compatibility
-    
+
     # Gaming utilities
     gamemode # Optimize system for gaming
     mangohud # Gaming performance overlay

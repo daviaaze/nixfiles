@@ -1,4 +1,4 @@
-{ mkYarnPackage, makeWrapper, pulumi-bin, postgresql, ssm-session-manager-plugin, awscli2, lib, src }:
+{ mkYarnPackage, makeWrapper, pulumi-bin, postgresql, ssm-session-manager-plugin, awscli2, lib, src, npm_token_path }:
 mkYarnPackage {
   pname = "luxuryescapes-cli";
   version = "1.3.3";
@@ -18,6 +18,8 @@ mkYarnPackage {
 
   buildPhase = ''
     runHook preBuild
+
+    export NPM_TOKEN=$(cat ${npm_token_path})
     
     yarn --offline build
   '';

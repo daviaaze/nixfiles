@@ -9,12 +9,6 @@
       nixpkgs-fmt
       ghostty
     ];
-
-    sessionVariables = {
-      EDITOR = "codium";
-      BROWSER = "zen";
-      TERMINAL = "ghostty";
-    };
   };
 
   programs = {

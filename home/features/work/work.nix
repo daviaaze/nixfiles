@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, config, ... }: {
   home.packages = with pkgs; [
     gh
     slack
@@ -8,6 +8,6 @@
     postman
     code-cursor
     (pkgs.callPackage ../../../packages/openfortivpn-webviewer.nix { })
-    (pkgs.callPackage ../../../packages/lux-cli.nix { src = inputs.lux-cli; })
+    (pkgs.callPackage ../../../packages/lux-cli.nix { src = inputs.lux-cli; npm_token_path = config.sops.secrets.work_npm_token.path; })
   ];
 }
