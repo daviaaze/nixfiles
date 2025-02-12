@@ -1,5 +1,11 @@
 # Common Nix settings shared across configurations
-{ config, ... }: {
+{ ... }: {
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/daviaaze/.nixfiles";
+  };
   nix = {
     settings = {
       trusted-users = [ "root" "wheel" ];
@@ -7,8 +13,6 @@
       keep-derivations = true;
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
-      secret-key-files = config.sops.secrets.nix_access_tokens.path;
-
     };
 
     gc = {

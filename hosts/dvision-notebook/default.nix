@@ -28,15 +28,8 @@
     spiceUSBRedirection.enable = true;
   };
 
-  programs.dconf.enable = true;
-
   services.spice-vdagentd.enable = true;
 
-
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-  };
 
   networking = {
     networkmanager = {
@@ -60,6 +53,11 @@
       extraCompatPackages = [ pkgs.proton-ge-bin ];
       gamescopeSession.enable = true;
     };
+    appimage = {
+    enable = true;
+    binfmt = true;
+  };
+    dconf.enable = true;
   };
 
   fonts.packages = with pkgs; [

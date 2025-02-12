@@ -18,7 +18,6 @@
       spotify
       stremio
       trayscale
-      discord-canary
       discord
       inputs.zen-browser.packages.${pkgs.system}.default
     ];

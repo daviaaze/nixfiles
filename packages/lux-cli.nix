@@ -1,14 +1,9 @@
-{ fetchFromGitHub, mkYarnPackage, electron_28, makeWrapper, pulumi-bin, postgresql, ssm-session-manager-plugin, awscli2, lib, }:
-mkYarnPackage rec {
+{ mkYarnPackage, makeWrapper, pulumi-bin, postgresql, ssm-session-manager-plugin, awscli2, lib, src }:
+mkYarnPackage {
   pname = "luxuryescapes-cli";
-  version = "1.3.2";
+  version = "1.3.3";
 
-  src = fetchFromGitHub {
-    owner = "lux-group";
-    repo = "cli";
-    rev = "main";
-    hash = "";
-  };
+  src = src;
 
   nativeBuildInputs = [
     makeWrapper
@@ -29,12 +24,12 @@ mkYarnPackage rec {
 
   postInstall = ''
       wrapProgram $out/bin/le \
-        --prefix PATH : ${lib.makeBinPath ([
+        --prefix PATH : ${lib.makeBinPath [
     pulumi-bin
     ssm-session-manager-plugin
     awscli2
     postgresql
-    ])}
+    ]}
   '';
 
   # Remove unnecessary phases

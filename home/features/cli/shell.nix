@@ -7,12 +7,13 @@
       neofetch
       nil
       nixpkgs-fmt
+      ghostty
     ];
 
     sessionVariables = {
       EDITOR = "codium";
       BROWSER = "zen";
-      TERMINAL = "kitty";
+      TERMINAL = "ghostty";
     };
   };
 

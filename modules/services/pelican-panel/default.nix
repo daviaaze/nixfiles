@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 
 with lib; let
   cfg = config.modules.pelican-panel;
@@ -39,35 +39,36 @@ in
       (import ./pelican-install.nix { inherit pkgs; inherit dir; inherit version; })
       (import ./pelican-update.nix { inherit pkgs; inherit dir; })
     ];
-
-    systemd.timers."pelican-cron" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "5m";
-        OnUnitActiveSec = "1m";
-        Unit = "pelican-cron.service";
+    systemd = {
+      timers."pelican-cron" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnBootSec = "5m";
+          OnUnitActiveSec = "1m";
+          Unit = "pelican-cron.service";
+        };
       };
-    };
 
-    systemd.services."pelican-cron" = {
-      script = ''
-        ${pkgs.php83}/bin/php ${dir}/artisan schedule:run >> /dev/null 2>&1
-      '';
-      serviceConfig = {
-        Type = "oneshot";
+      services."pelican-cron" = {
+        script = ''
+          ${pkgs.php83}/bin/php ${dir}/artisan schedule:run >> /dev/null 2>&1
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+        };
       };
-    };
 
-    systemd.services.pelican-queue = {
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        User = "nginx";
-        Group = "nginx";
-        Restart = "always";
-        ExecStart = "${pkgs.php83}/bin/php ${dir}/artisan queue:work --tries=3";
-        startLimitInterval = 180;
-        startLimitBurst = 30;
-        RestartSec = "5";
+      services.pelican-queue = {
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          User = "nginx";
+          Group = "nginx";
+          Restart = "always";
+          ExecStart = "${pkgs.php83}/bin/php ${dir}/artisan queue:work --tries=3";
+          startLimitInterval = 180;
+          startLimitBurst = 30;
+          RestartSec = "5";
+        };
       };
     };
   };

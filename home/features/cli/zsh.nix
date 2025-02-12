@@ -4,7 +4,6 @@
     git
     git-lfs
     python3
-    kitty
     screen
     neofetch
     nil
@@ -15,13 +14,14 @@
   sops = {
     secrets = {
       work_npm_token = { };
+      github_token = { };
     };
   };
 
   home.sessionVariables = {
     EDITOR = "codium";
     BROWSER = "zen";
-    TERMINAL = "kitty";
+    TERMINAL = "ghostty";
   };
 
   programs = {
@@ -35,9 +35,6 @@
     fzf = {
       enable = true;
       enableZshIntegration = true;
-    };
-    tmux = {
-      enable = true;
     };
     zsh = {
       enable = true;
@@ -72,6 +69,7 @@
       };
       initExtra = ''
         export NPM_TOKEN=$(cat ${config.sops.secrets.work_npm_token.path})
+        export GITHUB_TOKEN=$(cat ${config.sops.secrets.github_token.path})
         ${pkgs.neofetch}/bin/neofetch
       '';
     };

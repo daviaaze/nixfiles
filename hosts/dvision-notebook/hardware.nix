@@ -31,32 +31,32 @@
       options snd-hda-intel model=alc256-samsung-headphone
     '';
   };
+  fileSystems = {
+    "/" =
+      {
+        device = "/dev/disk/by-uuid/d64386ae-2d82-4882-b144-41fcc54bda4b";
+        fsType = "ext4";
+      };
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/d64386ae-2d82-4882-b144-41fcc54bda4b";
-      fsType = "ext4";
-    };
+    "/boot" =
+      {
+        device = "/dev/disk/by-uuid/EDF0-6924";
+        fsType = "vfat";
+        options = [ "fmask=0022" "dmask=0022" "umask=0077" ];
+      };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/EDF0-6924";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" "umask=0077" ];
-    };
+    "/home" =
+      {
+        device = "/dev/disk/by-uuid/8d906469-9587-47bb-be8e-9a921e32515d";
+        fsType = "ext4";
+      };
 
-  fileSystems."/home" =
-    {
-      device = "/dev/disk/by-uuid/8d906469-9587-47bb-be8e-9a921e32515d";
-      fsType = "ext4";
-    };
-
-  fileSystems."/nix" =
-    {
-      device = "/dev/disk/by-uuid/2196153d-184d-41fe-a541-23767454b1cf";
-      fsType = "ext4";
-    };
-
+    "/nix" =
+      {
+        device = "/dev/disk/by-uuid/2196153d-184d-41fe-a541-23767454b1cf";
+        fsType = "ext4";
+      };
+  };
   swapDevices = [
     {
       device = "/dev/nvme0n1p5";
@@ -66,22 +66,24 @@
 
   networking.hostName = "dvision-notebook";
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
-
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
-
-  hardware.enableAllFirmware = true;
+  hardware =
+    {
+      graphics = {
+        enable = true;
+        enable32Bit = true;
+        extraPackages = with pkgs; [
+          intel-media-driver
+          vaapiVdpau
+          libvdpau-va-gl
+        ];
+      };
+      bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        enableAllFirmware = true;
+      };
+      cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    };
 
   time.hardwareClockInLocalTime = true;
 
@@ -93,5 +95,4 @@
   # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

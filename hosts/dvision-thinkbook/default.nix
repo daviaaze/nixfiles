@@ -65,7 +65,7 @@
       };
     };
     firewall = {
-      enable = false;
+      enable = true;
       checkReversePath = "loose";
       trustedInterfaces = [ "br-8ee421ae204e" ];
     };
@@ -90,7 +90,6 @@
     systemPackages = with pkgs; [
       direnv
       git
-
       openssl
       bitwarden-desktop
     ];
@@ -107,7 +106,7 @@
 
   time.hardwareClockInLocalTime = true;
 
-  environment.gnome.excludePackages = (with pkgs; [
+  environment.gnome.excludePackages = with pkgs; [
     # for packages that are pkgs.*
     gnome-tour
     gnome-connections
@@ -117,7 +116,7 @@
     evince # document viewer
     gnome-terminal
     gnome-console
-  ]);
+  ];
 
   # Configure keymap in X11
   services.xserver = {

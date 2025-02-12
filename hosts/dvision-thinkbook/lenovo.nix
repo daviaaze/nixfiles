@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }: {
+{ pkgs, config, ... }: {
   boot = {
     initrd.services.udev.rules = ''
       ACTION=="add", SUBSYSTEM=="leds", KERNEL=="platform::micmute" ATTR{trigger}="audio-micmute"

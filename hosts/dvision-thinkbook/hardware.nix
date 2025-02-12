@@ -8,51 +8,55 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    systemd-boot.enable = lib.mkForce false;
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = lib.mkForce false;
+    };
+
+    kernelPackages = pkgs.linuxPackages_latest;
+    initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
+    initrd.kernelModules = [ "i915" ];
+    kernelModules = [ "kvm-intel" ];
+    kernelParams = [ "i915.force_probe=a720" "intel_pstate=active" "processor.ignore_ppc=1" ];
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
-  boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelParams = [ "i915.force_probe=a720" "intel_pstate=active" "processor.ignore_ppc=1" ];
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
+  fileSystems = {
+    "/" =
+      {
+        device = "/dev/disk/by-uuid/a61214ee-06e2-47b2-8df4-d27ec1c3fe6a";
+        fsType = "ext4";
+      };
+
+    "/boot" =
+      {
+        device = "/dev/disk/by-uuid/5F72-ECE6";
+        fsType = "vfat";
+        options = [ "fmask=0077" "dmask=0077" ];
+      };
+
+    "/home" =
+      {
+        device = "/dev/disk/by-uuid/12d0b11c-5c24-491d-b4b9-4474b2a8a062";
+        fsType = "ext4";
+      };
+
+    "/nix" =
+      {
+        device = "/dev/disk/by-uuid/6f3b93a9-01cf-4348-b21c-04bb5cfbc374";
+        fsType = "ext4";
+      };
+
+    "/var/lib/docker" =
+      {
+        device = "/dev/disk/by-uuid/b3d76418-5e48-4042-bdeb-dcbdd1e2ace1";
+        fsType = "ext4";
+      };
   };
-
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/a61214ee-06e2-47b2-8df4-d27ec1c3fe6a";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/5F72-ECE6";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  fileSystems."/home" =
-    {
-      device = "/dev/disk/by-uuid/12d0b11c-5c24-491d-b4b9-4474b2a8a062";
-      fsType = "ext4";
-    };
-
-  fileSystems."/nix" =
-    {
-      device = "/dev/disk/by-uuid/6f3b93a9-01cf-4348-b21c-04bb5cfbc374";
-      fsType = "ext4";
-    };
-
-  fileSystems."/var/lib/docker" =
-    {
-      device = "/dev/disk/by-uuid/b3d76418-5e48-4042-bdeb-dcbdd1e2ace1";
-      fsType = "ext4";
-    };
 
   swapDevices =
     [
