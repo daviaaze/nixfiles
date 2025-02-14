@@ -5,6 +5,7 @@
     git-lfs
     python3
     screen
+    ghostty
     neofetch
     nil
     nixpkgs-fmt
