@@ -26,6 +26,12 @@
     "org/gnome/desktop/wm/preferences" = {
       button-layout = ":minimize,maximize,close";
     };
+    "org/gnome/desktop/wm/keybindings" = {
+      switch-applications = [ ];
+      switch-applications-backward = [];
+      switch-windows = [ "<Alt>Tab" ];
+      switch-windows-backward = [ "<Shift><Alt>Tab" ];
+    };
     "org/gnome/desktop/peripherals/touchpad" = {
       natural-scroll = true;
     };

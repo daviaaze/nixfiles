@@ -49,9 +49,10 @@
     zsh.enable = true;
     steam = {
       enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
       extraCompatPackages = [ pkgs.proton-ge-bin ];
       gamescopeSession.enable = true;
+      platformOptimizations.enable = true;
     };
     appimage = {
       enable = true;

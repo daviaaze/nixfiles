@@ -33,22 +33,8 @@
     pipewire.enable = true;
     tailscale.enable = true;
     openssh.enable = true;
-    power-profiles-daemon.enable = false;
+    power-profiles-daemon.enable = true;
     thermald.enable = true;
-    auto-cpufreq = {
-      enable = true;
-      settings = {
-        charger = {
-          governor = "performance";
-          turbo = "auto";
-          scaling_min_freq = 2000000; # 2.0 GHz minimum
-        };
-        battery = {
-          governor = "powersave";
-          turbo = "never";
-        };
-      };
-    };
   };
 
   virtualisation = {
@@ -70,16 +56,15 @@
       trustedInterfaces = [ "br-8ee421ae204e" ];
     };
   };
-
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "performance"; # Override default governor
-  };
+  
   programs = {
     zsh.enable = true;
     steam = {
       enable = true;
+      extraCompatPackages = [ pkgs.proton-ge-bin ];
+      gamescopeSession.enable = true;
     };
+    gamemode.enable = true;
   };
 
   fonts.packages = with pkgs; [
@@ -90,6 +75,7 @@
     systemPackages = with pkgs; [
       direnv
       git
+      vulkan-tools
       openssl
       bitwarden-desktop
     ];
@@ -130,6 +116,7 @@
     extraPackages = with pkgs; [
       vpl-gpu-rt
       vaapiIntel
+      intel-media-driver
     ];
   };
 
