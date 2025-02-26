@@ -56,7 +56,7 @@
       trustedInterfaces = [ "br-8ee421ae204e" ];
     };
   };
-  
+
   programs = {
     zsh.enable = true;
     steam = {

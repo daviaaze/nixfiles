@@ -28,7 +28,7 @@
     };
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [ ];
-      switch-applications-backward = [];
+      switch-applications-backward = [ ];
       switch-windows = [ "<Alt>Tab" ];
       switch-windows-backward = [ "<Shift><Alt>Tab" ];
     };
