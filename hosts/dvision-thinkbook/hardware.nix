@@ -18,7 +18,7 @@
     initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
     initrd.kernelModules = [ "i915" "xe" ];
     kernelModules = [ "kvm-intel" ];
-    kernelParams = [ "i915.force_probe=!a720" "xe.force_probe=a720" ];
+    kernelParams = [ "i915.force_probe=a720" "xe.force_probe=!a720" ];
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";

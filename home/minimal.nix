@@ -1,6 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     ./features/cli
+    inputs.vscode-server.homeManagerModules.vscode-server
   ];
   home = {
     username = "daviaaze";
@@ -13,6 +14,7 @@
     home-manager.enable = true;
     micro.enable = true;
   };
+  services.vscode-server.enable = true;
 
   # Properly handle GTK themes under Wayland
   gtk = {
