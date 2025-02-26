@@ -10,6 +10,7 @@
     ];
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "amdgpu" ];
       kernelModules = [ "amdgpu" ];
@@ -35,20 +36,29 @@
   };
 
   fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/07d4bfdb-6f79-4b69-aa50-0453559e4443";
+    { device = "/dev/disk/by-uuid/51cede58-d968-431f-b277-3f9d77074a0b";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/C037-1A0C";
+    { device = "/dev/disk/by-uuid/B6A3-4742";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/5f01a889-16f9-4f2e-a7a2-89ec6df5ebeb";
+      fsType = "ext4";
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/418aa1ca-6d14-493b-bbdb-9ac58cbf97d7";
+      fsType = "ext4";
+    };
+
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/349b0f72-f12b-46df-94c3-4516d4a675c9"; }];
+    [ { device = "/dev/disk/by-uuid/57a52f5a-a087-45d1-89b3-fe2c5de0ad23"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
