@@ -14,7 +14,10 @@
     home-manager.enable = true;
     micro.enable = true;
   };
-  services.vscode-server.enable = true;
+  services.vscode-server = {
+    enable = true;
+    installPath = "$HOME/.vscode-oss";
+  };
 
   # Properly handle GTK themes under Wayland
   gtk = {
