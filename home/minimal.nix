@@ -17,7 +17,7 @@
 
   services.vscode-server = {
     enable = true;
-    installPath = "$HOME/.vscode-oss";
+    installPath = "$HOME/.vscodium-server";
   };
 
   # Properly handle GTK themes under Wayland
