@@ -103,10 +103,6 @@
     shells = [ pkgs.zsh ];
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  xdg.portal.wlr.enable = true;
-
   services.fprintd.enable = true;
 
   # Enable the GNOME Desktop Environment.

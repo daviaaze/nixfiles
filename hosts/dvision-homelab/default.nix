@@ -2,6 +2,29 @@
   imports = [
     inputs.chaotic.nixosModules.default
     ./hardware.nix
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs.inputs = inputs;
+        sharedModules = [
+          inputs.sops-nix.homeManagerModules.sops
+          inputs.vscode-server.homeModules.default
+        ];
+        users.daviaaze = {
+          sops = {
+            age.keyFile = "/home/daviaaze/.config/sops/age/keys.txt"; # must have no password!
+            # It's also possible to use a ssh key, but only when it has no password:
+            #age.sshKeyPaths = [ "/home/user/path-to-ssh-key" ];
+            defaultSopsFile = ../../secrets/secrets.yaml;
+          };
+          imports = [
+            ../../home/minimal.nix
+          ];
+        };
+      };
+    }
   ];
 
   sops = {
@@ -118,8 +141,6 @@
       gnome-console
     ];
   };
-
-  xdg.portal.wlr.enable = true;
 
   systemd.targets = {
     sleep.enable = false;
