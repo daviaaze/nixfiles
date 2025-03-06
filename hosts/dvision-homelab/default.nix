@@ -32,21 +32,6 @@
   };
 
   modules = {
-    beszel = {
-      enable = true;
-      port = 45876;
-      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGd3pPaRpvSfZulrZ6Au7x4grtoRn8UeNN1IEHnE1y20";
-      hub = {
-        enable = true;
-      };
-    };
-    nginx = {
-      enable = true;
-      domainName = "daviaaze.com";
-      beszel = {
-        enable = true;
-      };
-    };
   };
 
   services = {
