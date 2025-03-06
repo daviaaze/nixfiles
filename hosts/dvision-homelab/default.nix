@@ -31,77 +31,7 @@
     networkmanager.enable = true;
   };
 
-  users.groups.pelican = {
-    gid = 657;
-  };
-
-  users.users.pelican = {
-    isSystemUser = true;
-    uid = 657;
-    group = "pelican";
-    extraGroups = [ "docker" ];
-  };
-
   modules = {
-    pelican-wings = {
-      enable = true;
-      debug = true;
-      uuid = "1d8613be-bb19-4b91-8d99-6e49c447e48a";
-      tokenId = "8Q0mz63fiTZKjLW3";
-      token = "dlVjopbgFqRWt3kfFa9nJnhilsmwT9JxANFSBnO5FJX1Nalu0uGhY6ZBWjbfjX1f";
-      api = {
-        host = "0.0.0.0";
-        port = 8443;
-        ssl = {
-          enabled = true;
-          domain = "sasqatch.daviaaze.com";
-        };
-        trusted_proxies = [
-          "173.245.48.0/20"
-          "103.21.244.0/22"
-          "103.22.200.0/22"
-          "103.31.4.0/22"
-          "141.101.64.0/18"
-          "108.162.192.0/18"
-          "190.93.240.0/20"
-          "188.114.96.0/20"
-          "197.234.240.0/22"
-          "198.41.128.0/17"
-          "162.158.0.0/15"
-          "104.16.0.0/13"
-          "104.24.0.0/14"
-          "172.64.0.0/13"
-          "131.0.72.0/22"
-        ];
-      };
-      system = {
-        sftp = {
-          bind_port = 2022;
-        };
-        timezone = "America/Sao_Paulo";
-        username = "pelican";
-        user = {
-          uid = 657;
-          gid = 657;
-          rootless = {
-            enabled = true;
-            container_uid = 657;
-            container_gid = 657;
-          };
-        };
-        check_permissions_on_boot = false;
-        crash_detection = {
-          enabled = true;
-          timeout = 60;
-        };
-        allowed_mounts = [ ];
-      };
-      docker.network = {
-        name = "host";
-        network_mode = "host";
-      };
-      remote = "https://panel.daviaaze.com";
-    };
     beszel = {
       enable = true;
       port = 45876;
@@ -113,10 +43,6 @@
     nginx = {
       enable = true;
       domainName = "daviaaze.com";
-      panel = {
-        enable = true;
-        enableSSL = false;
-      };
       beszel = {
         enable = true;
       };
@@ -141,7 +67,6 @@
         };
       };
     };
-    vscode-server.enable = true;
     cloudflare-dyndns = {
       enable = true;
       apiTokenFile = config.sops.secrets.cloudflare_api_token.path;
@@ -156,18 +81,6 @@
       authKeyFile = config.sops.secrets.tailscale_auth_key.path;
       openFirewall = true;
     };
-    xserver = {
-      enable = true;
-      desktopManager.gnome.enable = true;
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
-      xkb = {
-        layout = "br";
-        variant = "";
-      };
-    };
   };
 
   virtualisation = {
@@ -177,16 +90,7 @@
   };
 
   programs = {
-    zsh = {
-      enable = true;
-      enableBashCompletion = true;
-      autosuggestions.enable = true;
-      histSize = 500;
-      shellAliases = {
-        "update-local" = "sudo nixos-rebuild switch --flake ~/.nixfiles";
-        "update-remote" = "sudo nixos-rebuild switch --flake github:daviaaze/nixfiles";
-      };
-    };
+    zsh.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
