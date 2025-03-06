@@ -7,6 +7,7 @@
     homeDirectory = "/home/daviaaze";
     stateVersion = "23.11";
     enableNixpkgsReleaseCheck = true;
+    packages = [ pkgs.dconf ];
   };
 
   programs = {
